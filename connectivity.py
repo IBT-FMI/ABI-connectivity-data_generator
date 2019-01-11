@@ -11,6 +11,7 @@ import numpy
 import nibabel
 import re
 import nrrd
+import xml.etree.ElementTree as et
 from collections import defaultdict
 from mhd_utils_3d import *
 from nipype.interfaces.ants import ApplyTransforms
@@ -22,9 +23,7 @@ from nipype.interfaces.base import BaseInterface, BaseInterfaceInputSpec, traits
 API_SERVER = "http://api.brain-map.org/"
 API_DATA_PATH = API_SERVER + "api/v2/data/"
 
-#TODO: maybe merge into a single file that downloads either connectivtiy or gene expression data
-#TODO: get some info on experiment data
-def GetExpID():
+def GetExpID(startRow=0,numRows=2000,totalRows = -1):
     """
     Queries the Allen Mouse Brain Institute website for all gene expression data available for download.
 
@@ -40,22 +39,15 @@ def GetExpID():
     """
 
     startRow = 0
-    numRows = 1000
+    numRows = 2000
     totalRows = -1
     rows = []
     GeneNames = []
     SectionDataSetID = []
-#    info = defaultdict(list)
     info = list()
-#    GeneNames_cor = []
-#    SectionDataSetID_cor = []
-
-#    GeneNames_sag = []
-#    SectionDataSetID_sag = []
     done = False
 
     while not done:
-        #pagedUrl = API_DATA_PATH +"query.json?criteria=model::SectionDataSet,rma::criteria,products[abbreviation$eq'Mouse'],rma::include,specimen(stereotaxic_injections(primary_injection_structure,structures))startRow=%d&numRows=%d" % (startRow,numRows)
         r = "&start_row=%d&num_rows=%d" % (startRow,numRows)
         pagedUrl = API_DATA_PATH + "query.json?criteria=model::SectionDataSet,rma::criteria,products%5Bid$eq5%5D,rma::include,specimen(stereotaxic_injections(primary_injection_structure,structures))" + r
         print(pagedUrl)
@@ -102,83 +94,25 @@ def nrrd_to_nifti(file):
     nibabel.save(img,nii_path)
 
     return nii_path
-#TODO: separate python script?? Not needed after all...
-class ResampleImageSpec(ANTSCommandInputSpec):
-    dimension = traits.Enum(2,3,4,
-            argstr='%d',
-            position=1)
 
-    input_image = File(
-            argstr='%s',
-            mandatory=True,
-            position=2)
-
-    output_image = File(
-            argstr='%s',
-            mandatory = True,
-            position=3)
-    
-    M = traits.Str(
-            argstr ='%s',
-            mandatory = True,
-            position=4)
-    size = traits.Int(
-            argstr = 'size=%d',
-            position=5)
-
-    spacing = traits.Int(
-            argstr = 'spacing=%d',
-            position=6)
-    #TODO:interpolation= onyl necessary when size and spacing not declared, does it also work when they are declared
-    interpolation = traits.Enum(0,1,2,3,4,
-            argstr='interpolation=%d',
-            position = 7)
-    #TODO:optional parameters size, spacing, interpolation, blablabla...
-
-def ants_int_resample(dim,input_image,resolution,interpolation,output_image = None):
-    #print(str(dim),input_image,output_image,str(resolution),str(interpolation))
-    ri = ResampleImage()
-    ri.inputs.dimension = dim
-    ri.inputs.input_image = input_image
-    if output_image is None:
-        #TODO: theres got to be an easier way...
-        output_image = ""
-        for s in input_image.split("_"):
-            if "um" not in s :
-                output_image += s + "_"
-            else:
-                output_image += (str(resolution) + "um_" + str(interpolation))
-        output_image = output_image[:-1]
-    print(output_image)
-    ri.inputs.output_image = output_image
-    resolution = resolution / float(1000)
-    resolution_cmd = str(resolution) + 'x' + str(resolution) + 'x' + str(resolution)
-    print(resolution_cmd)
-    ri.inputs.M = resolution_cmd
-    #ri.inputs.size = 1  TODO: Why did I take these out exactly? What do they do??
-    #ri.inputs.spacing = 0
-    ri.inputs.interpolation = interpolation
-    print(ri.cmdline)
-    ri.run()
-
-
-class ResampleImageOutputSpec(TraitedSpec):
-    output_image = File(exists=True,desc='Resampled Image')
-
-class ResampleImage(ANTSCommand):
-    _cmd = 'ResampleImage'
-    input_spec = ResampleImageSpec
-    output_spec = ResampleImageOutputSpec
-
+def get_identifying_structure(metadata):
+   tree = et.parse(metadata)
+   root = tree.getroot()
+   struc = root.findall('.//primary-injection-structure/safe-name')[0]
+   return struc.text
 
 def get_exp_metadata(exp,path):
     url_meta = API_DATA_PATH + "/SectionDataSet/query.xml?id=" + str(exp) + "&include=specimen(stereotaxic_injections(primary_injection_structure,structures))"
     filename = str(exp) + "_experiment_metadata.xml"
     s = urllib.request.urlopen(url_meta)
     contents = s.read()
-    file = open(os.path.join(path,filename), 'wb')
+    path_to_metadata = os.path.join(path,filename)
+    file = open(path_to_metadata, 'wb')
     file.write(contents)
     file.close()
+
+    return path_to_metadata
+
 
 def download_all_connectivity(info):
     """
@@ -196,14 +130,19 @@ def download_all_connectivity(info):
         if resolution == 25: path_to_res = os.path.join("/mnt/data/setinadata/abi_data/connectivity/ABI_connectivity_data",("data_40um"))
         if not os.path.isdir(path_to_res):os.mkdir(path_to_res)
         for exp in info:
-            #replace brackets with '_' and remove all other special characters
             path_to_exp = os.path.join(path_to_res,str(exp))
             print(path_to_exp)
-            if os.path.isdir(path_to_exp):
-                print("skip" + str(exp))
-                continue
+            #TODO: look inside if stuff is there...
+            if os.path.isdir(path_to_exp): continue
             os.mkdir(path_to_exp)
-            get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice 
+            path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
+            struc_name=get_identifying_structure(path_to_metadata)
+            struc_name= re.sub(" ","_",struc_name)
+            struc_name=re.sub("[()]","",struc_name)
+            new_name = struc_name + "-" + os.path.basename(path_to_exp)
+            new_path = os.path.join(os.path.dirname(path_to_exp),new_name)
+            print(new_path)
+            os.rename(path_to_exp,new_path)
             resolution_url = "?image=projection_density&resolution=" + str(resolution)
             url = download_url + str(exp) + resolution_url
             fh = urllib.request.urlretrieve(url)
@@ -211,30 +150,14 @@ def download_all_connectivity(info):
             #TODO: do that differenttly ...
             filename = str.split(filename,";")[0]
             file_path_nrrd = os.path.join(path_to_exp,filename)
-            print(file_path_nrrd)
             shutil.copy(fh[0],file_path_nrrd)
             os.remove(fh[0])
             #os.rename(fh[0],file_path_nrrd) only works if source and dest are on the same filesystem
-            #file_path_res=ants_resampleImage(file_path,resolution)
             file_path_nii = nrrd_to_nifti(file_path_nrrd)
-            print(file_path_nii)
             os.remove(file_path_nrrd)
             file_path_2dsurqec = apply_composite(file_path_nii,resolution)
-            print(file_path_2dsurqec)
             os.remove(file_path_nii)
-            #TODO: No need to resample if apply composite is already with a reference of target resolution. Check if we should get a composite-file at 25um!
-            #if resolution == 25 :
-            #    target_resolution = 40
-            #elif resolution == 100:
-            #    target_resolution = 200
-            #print("to resample")
-            #print(file_path)
-            #ants_int_resample(3,file_path,target_resolution,0)
-            #ants_int_resample(3,file_path,target_resolution,1)
-            #ants_int_resample(3,file_path,target_resolution,2)
-            #ants_int_resample(3,file_path,target_resolution,3)
-            #ants_int_resample(3,file_path,target_resolution,4)
-    
+
     return
 
 def apply_composite(file,resolution):
@@ -269,7 +192,7 @@ def apply_composite(file,resolution):
             output_image += (str(resolution) + "um_")
     output_image = output_image[:-1]
     output_image = os.path.join(os.path.dirname(file),output_image)
-    
+
     at.inputs.reference_image = ref_image
     name = str.split(os.path.basename(output_image),'.nii')[0] + '_2dsurqec.nii.gz'
     #at.inputs.interpolation = 'NearestNeighbor' #TODO: Sure??
@@ -282,11 +205,57 @@ def apply_composite(file,resolution):
     #TODO sform to qform
     return output_image
 
+def download_annotation_file(path="ABI_connectivity_data"):
+   anno_url_json = "http://api.brain-map.org/api/v2/structure_graph_download/1.json"
+   anno_url_xml = "http://api.brain-map.org/api/v2/structure_graph_download/1.xml"
+   filename_xml = "structure_graph.xml"
+   filename_json = "structure_graph.json"
+
+   s = urllib.request.urlopen(anno_url_json)
+   contents = s.read()
+   file = open(os.path.join(path,filename_json), 'wb')
+   file.write(contents)
+   file.close()
+
+   s = urllib.request.urlopen(anno_url_xml)
+   contents = s.read()
+   file = open(os.path.join(path,filename_xml), 'wb')
+   file.write(contents)
+   file.close()
+
+
+def create_archive(name,version):
+   path = "ABI_connectivity_data-9999/data_200um"
+   tar_name = name + "-" + version + ".tar.xz"
+   with tarfile.open(tar_name, "w:xz") as tar_handle:
+      for root,dirs,files in os.walk(path):
+         for file in files:
+            print(file)
+            tar_handle.add(os.path.join(root,file))
+
+
+
+
+def save_info(info):
+    f = open("ABI_connectivity_data/ABI_connectivity_ids.csv","w")
+    for exp in info:
+        f.write('\n')
+        f.write(str(exp))
 
 def main():
+   parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+   parser.add_argument('--package_name','-n',type=str,default="ABI_connectivity_data")
+   parser.add_argument('--package_version','-v',type=str,default="")
+   parser.add_argument('--startRow','-s',type=int,default=0)
+   parser.add_argument('--numRows','-r',type=int,default=2000)
+   parser.add_argument('--totalRows','-t',type=int,default=-1)
+   args=parser.parse_args()
 
-    info=GetExpID()
-    download_all_connectivity(info)
+   download_annotation_file()
+   #info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
+   #download_all_connectivity(info)
+   #save_info(info)
+   #create_archive()
 
 
 if __name__ == "__main__":
