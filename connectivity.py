@@ -2,6 +2,7 @@ import argparse
 import copy
 import json
 import os
+import glob
 import sys
 import urllib
 import urllib.request
@@ -9,6 +10,7 @@ import shutil
 import zipfile
 import numpy
 import nibabel
+import tarfile
 import re
 import nrrd
 import xml.etree.ElementTree as et
@@ -38,9 +40,9 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
 
     """
 
-    startRow = 0
-    numRows = 2000
-    totalRows = -1
+    startRow = startRow
+    numRows = numRows
+    totalRows = totalRows
     rows = []
     GeneNames = []
     SectionDataSetID = []
@@ -50,7 +52,6 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
     while not done:
         r = "&start_row=%d&num_rows=%d" % (startRow,numRows)
         pagedUrl = API_DATA_PATH + "query.json?criteria=model::SectionDataSet,rma::criteria,products%5Bid$eq5%5D,rma::include,specimen(stereotaxic_injections(primary_injection_structure,structures))" + r
-        print(pagedUrl)
         source = urllib.request.urlopen(pagedUrl).read()
         response = json.loads(source)
         rows += response['msg']
@@ -223,17 +224,47 @@ def download_annotation_file(path="ABI_connectivity_data"):
    file.write(contents)
    file.close()
 
+def sort_and_archive():
+   arch = dict()
+   #TODO: There has to be an easier way...
+   #divide p
+   #check for any file that does not start with a letter 
+   path = "ABI_connectivity_data/data_40um"
+   arch[1] = glob.glob(os.path.join(path,"[Aa]*"))
+   arch[2] = glob.glob(os.path.join(path,"[BbCc]*"))
+   arch[3] = glob.glob(os.path.join(path,"[DdEe]*"))
+   arch[4] = glob.glob(os.path.join(path,"[FfGgHhIiJj]*"))
+   arch[5]= glob.glob(os.path.join(path,"[KkLl]*"))
+   arch[6] = glob.glob(os.path.join(path,"[Mm]*"))
+   arch[7] = glob.glob(os.path.join(path,"[NnOo]*"))
+   p_list = sorted(glob.glob(os.path.join(path,"[Pp]*")))
+   ind = [p_list.index(i) for i in p_list if 'Primary' in i][0]
+   arch[8] = p_list[0:ind]
+   arch[9]= p_list[ind:len(p_list)]
+   arch[10] = glob.glob(os.path.join(path,"[QqRR]*"))
+   arch[11] = glob.glob(os.path.join(path,"[Ss]*"))
+   arch[12] = glob.glob(os.path.join(path,"[TtUuVvWwXxYyZz]*"))
+   number_of_archives = len(arch)
+   number_of_folders = len(os.listdir(path))
+   for i in range(1,(number_of_archives+1)):
+      folder_name= "ABI_connectivity_data/ABI_connectivity_data_40um_" + str(i) +"-9999"
+      if not os.path.isdir(folder_name):os.mkdir(folder_name)
+      for file in arch[i]:
+         new_path = os.path.join(folder_name,os.path.basename(file))
+         os.rename(file,new_path)
+      tarname=folder_name + ".tar"
+      create_archive(tarname,folder_name)
 
-def create_archive(name,version):
-   path = "ABI_connectivity_data-9999/data_200um"
-   tar_name = name + "-" + version + ".tar.xz"
-   with tarfile.open(tar_name, "w:xz") as tar_handle:
+
+def create_archive(tarname,path):
+   path = path
+   tar_name = tarname
+   print(path)
+   print(tar_name)
+   with tarfile.open(tar_name, "w") as tar_handle:
       for root,dirs,files in os.walk(path):
          for file in files:
-            print(file)
             tar_handle.add(os.path.join(root,file))
-
-
 
 
 def save_info(info):
@@ -249,13 +280,15 @@ def main():
    parser.add_argument('--startRow','-s',type=int,default=0)
    parser.add_argument('--numRows','-r',type=int,default=2000)
    parser.add_argument('--totalRows','-t',type=int,default=-1)
+   parser.add_argument('--resolution','-x',type=int,default=200)
    args=parser.parse_args()
 
-   download_annotation_file()
+   #download_annotation_file()
    #info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
    #download_all_connectivity(info)
    #save_info(info)
    #create_archive()
+   sort_and_archive()
 
 
 if __name__ == "__main__":
