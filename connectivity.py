@@ -115,7 +115,7 @@ def get_exp_metadata(exp,path):
     return path_to_metadata
 
 
-def download_all_connectivity(info):
+def download_all_connectivity(info,folder_name,resolution=None):
     """
     Download all given genes corresponding to SectionDataSetID given in 100um and 25um resolution, converts nrrd to nii, registers to dsurqec... and resamples files to 40 and 200 respectively.
 
@@ -124,17 +124,22 @@ def download_all_connectivity(info):
         SectionDataSetID : list(int)
             o=[0.200000002980232 0 0 -6.26999998092651; 0 0.200000002980232 0 -10.6000003814697; 0 0 0.200000002980232 -7.88000011444092; 0 0 0 1]list of SectionDataSetID to download.
     """
-    if not os.path.isdir("/mnt/data/setinadata/abi_data/connectivity/ABI_connectivity_data"): os.mkdir("/mnt/data/setinadata/abi_data/connectivity/ABI_connectivity_data")
+    if resolution=None:
+      res=[100,25]
+   elif resolution=40:
+      res=[25]
+   elif resolution=200:
+      res=[100]
+   
     download_url = "http://api.brain-map.org/grid_data/download_file/"
-    for resolution in [100,25]:
-        if resolution == 100: path_to_res = os.path.join("/mnt/data/setinadata/abi_data/connectivity/ABI_connectivity_data",("data_200um"))
-        if resolution == 25: path_to_res = os.path.join("/mnt/data/setinadata/abi_data/connectivity/ABI_connectivity_data",("data_40um"))
+    
+    for resolution in res:
+        if resolution == 100: path_to_res = folder_name
+        if resolution == 25: path_to_res = folder_name + "HD"
         if not os.path.isdir(path_to_res):os.mkdir(path_to_res)
         for exp in info:
             path_to_exp = os.path.join(path_to_res,str(exp))
-            print(path_to_exp)
             #TODO: look inside if stuff is there...
-            if os.path.isdir(path_to_exp): continue
             os.mkdir(path_to_exp)
             path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
             struc_name=get_identifying_structure(path_to_metadata)
@@ -142,7 +147,6 @@ def download_all_connectivity(info):
             struc_name=re.sub("[()]","",struc_name)
             new_name = struc_name + "-" + os.path.basename(path_to_exp)
             new_path = os.path.join(os.path.dirname(path_to_exp),new_name)
-            print(new_path)
             os.rename(path_to_exp,new_path)
             resolution_url = "?image=projection_density&resolution=" + str(resolution)
             url = download_url + str(exp) + resolution_url
@@ -150,7 +154,7 @@ def download_all_connectivity(info):
             filename = str.split((fh[1]._headers[6][1]),'filename=')[1]  #TODO: Consistent??
             #TODO: do that differenttly ...
             filename = str.split(filename,";")[0]
-            file_path_nrrd = os.path.join(path_to_exp,filename)
+            file_path_nrrd = os.path.join(new_path,filename)
             shutil.copy(fh[0],file_path_nrrd)
             os.remove(fh[0])
             #os.rename(fh[0],file_path_nrrd) only works if source and dest are on the same filesystem
@@ -158,6 +162,14 @@ def download_all_connectivity(info):
             os.remove(file_path_nrrd)
             file_path_2dsurqec = apply_composite(file_path_nii,resolution)
             os.remove(file_path_nii)
+
+         #create archives
+      if resolution == 40:
+            sort_and_archive()
+      elif resolution== 200:
+            save_info(info,folder_name)
+            tarname=folder_name + ".tar"
+            create_archive(tarname,path)
 
     return
 
@@ -178,10 +190,10 @@ def apply_composite(file,resolution):
     at.inputs.dimension = 3
     at.inputs.input_image = file
     if resolution == 100:
-        ref_image = 'dsurqec_200micron_masked.nii'
+        ref_image = '/usr/share/mouse-brain-atlases/dsurqec_200micron_masked.nii'
         resolution = 200
     else:
-        ref_image = 'dsurqec_40micron_masked.nii'
+        ref_image = '/usr/share/mouse-brain-atlases/dsurqec_40micron_masked.nii'
         resolution = 40
 
     #TODO: theres got to be an easier way...
@@ -200,18 +212,20 @@ def apply_composite(file,resolution):
     at.inputs.interpolation = 'BSpline'
     output_image = os.path.join(os.path.dirname(output_image),name)
     at.inputs.output_image = output_image
-    at.inputs.transforms = 'abi2dsurqec_Composite.h5'
+    at.inputs.transforms = '/usr/share/abi2dsurqec_Composite.h5'
     at.run()
 
     #TODO sform to qform
     return output_image
 
-def download_annotation_file(path="ABI_connectivity_data"):
+def download_annotation_file(path):
    anno_url_json = "http://api.brain-map.org/api/v2/structure_graph_download/1.json"
    anno_url_xml = "http://api.brain-map.org/api/v2/structure_graph_download/1.xml"
    filename_xml = "structure_graph.xml"
    filename_json = "structure_graph.json"
-
+   
+   if not os.path.isdir(path):os.mkdir(path)
+   
    s = urllib.request.urlopen(anno_url_json)
    contents = s.read()
    file = open(os.path.join(path,filename_json), 'wb')
@@ -224,30 +238,42 @@ def download_annotation_file(path="ABI_connectivity_data"):
    file.write(contents)
    file.close()
 
-def sort_and_archive():
+def sort_and_archive(path="ABI_connectivity_dataHD"):
    arch = dict()
+   arch_names_suff = dict()
    #TODO: There has to be an easier way...
-   #divide p
-   #check for any file that does not start with a letter 
-   path = "ABI_connectivity_data/data_40um"
+   #TODO:check for any file that does not start with a letter
    arch[1] = glob.glob(os.path.join(path,"[Aa]*"))
+   arch_names_suff[1] = "a"
    arch[2] = glob.glob(os.path.join(path,"[BbCc]*"))
+   arch_names_suff[2] = "b-c"
    arch[3] = glob.glob(os.path.join(path,"[DdEe]*"))
+   arch_names_suff[1] = "d-e"
    arch[4] = glob.glob(os.path.join(path,"[FfGgHhIiJj]*"))
+   arch_names_suff[4] = "f-j"
    arch[5]= glob.glob(os.path.join(path,"[KkLl]*"))
+   arch_names_suff[5] = "k-l"
    arch[6] = glob.glob(os.path.join(path,"[Mm]*"))
+   arch_names_suff[6] = "m"
    arch[7] = glob.glob(os.path.join(path,"[NnOo]*"))
+   arch_names_suff[7] = "n-o"
    p_list = sorted(glob.glob(os.path.join(path,"[Pp]*")))
    ind = [p_list.index(i) for i in p_list if 'Primary' in i][0]
    arch[8] = p_list[0:ind]
+   arch_names_suff[8] = "pa-pre"
    arch[9]= p_list[ind:len(p_list)]
+   arch_names_suff[9] = "pri-po"
    arch[10] = glob.glob(os.path.join(path,"[QqRR]*"))
+   arch_names_suff[10] = "q-r"
    arch[11] = glob.glob(os.path.join(path,"[Ss]*"))
+   arch_names_suff[1] = "a"
    arch[12] = glob.glob(os.path.join(path,"[TtUuVvWwXxYyZz]*"))
-   number_of_archives = len(arch)
+   arch_names_suff[12] = "t-z"
+   number_of_archives = 12
    number_of_folders = len(os.listdir(path))
+   
    for i in range(1,(number_of_archives+1)):
-      folder_name= "ABI_connectivity_data/ABI_connectivity_data_40um_" + str(i) +"-9999"
+      folder_name= os.path.join(path,"ABI_connectivity_dataHD" + arch[i] + "-0.1"
       if not os.path.isdir(folder_name):os.mkdir(folder_name)
       for file in arch[i]:
          new_path = os.path.join(folder_name,os.path.basename(file))
@@ -266,14 +292,17 @@ def create_archive(tarname,path):
          for file in files:
             tar_handle.add(os.path.join(root,file))
 
-
-def save_info(info):
-    f = open("ABI_connectivity_data/ABI_connectivity_ids.csv","w")
+#TODO: Do I really need that? Usefule for expression data, but here?
+def save_info(info,folder_name):
+      path= os.path.join(folder_name,"ABI_connectivity_ids.csv")
+    f = open(path,"w")
     for exp in info:
         f.write('\n')
         f.write(str(exp))
 
 def main():
+#TODO: some sort of parallel download should be possible, stating totalrows and startrows differently for simultaneous download
+#TODO: timeout for urllib
    parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
    parser.add_argument('--package_name','-n',type=str,default="ABI_connectivity_data")
    parser.add_argument('--package_version','-v',type=str,default="")
@@ -283,12 +312,13 @@ def main():
    parser.add_argument('--resolution','-x',type=int,default=200)
    args=parser.parse_args()
 
-   #download_annotation_file()
-   #info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
-   #download_all_connectivity(info)
+   folder_name = args.package_name + "-" + args.package_version
+   download_annotation_file(folder_name)
+   info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
+   download_all_connectivity(info,folder_name=folder_name,resolution=args.resolution)
    #save_info(info)
    #create_archive()
-   sort_and_archive()
+   #sort_and_archive()
 
 
 if __name__ == "__main__":
