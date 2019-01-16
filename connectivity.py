@@ -15,7 +15,6 @@ import re
 import nrrd
 import xml.etree.ElementTree as et
 from collections import defaultdict
-from mhd_utils_3d import *
 from nipype.interfaces.ants import ApplyTransforms
 from nipype.interfaces.ants.base import ANTSCommand, ANTSCommandInputSpec
 from nipype.interfaces.base import BaseInterface, BaseInterfaceInputSpec, traits, File, Str, TraitedSpec, Directory, CommandLineInputSpec, CommandLine, InputMultiPath, isdefined, Bunch, OutputMultiPath
@@ -124,52 +123,54 @@ def download_all_connectivity(info,folder_name,resolution=None):
         SectionDataSetID : list(int)
             o=[0.200000002980232 0 0 -6.26999998092651; 0 0.200000002980232 0 -10.6000003814697; 0 0 0.200000002980232 -7.88000011444092; 0 0 0 1]list of SectionDataSetID to download.
     """
-    if resolution=None:
-      res=[100,25]
-   elif resolution=40:
-      res=[25]
-   elif resolution=200:
-      res=[100]
    
-    download_url = "http://api.brain-map.org/grid_data/download_file/"
-    
-    for resolution in res:
-        if resolution == 100: path_to_res = folder_name
-        if resolution == 25: path_to_res = folder_name + "HD"
-        if not os.path.isdir(path_to_res):os.mkdir(path_to_res)
-        for exp in info:
-            path_to_exp = os.path.join(path_to_res,str(exp))
-            #TODO: look inside if stuff is there...
-            os.mkdir(path_to_exp)
-            path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
-            struc_name=get_identifying_structure(path_to_metadata)
-            struc_name= re.sub(" ","_",struc_name)
-            struc_name=re.sub("[()]","",struc_name)
-            new_name = struc_name + "-" + os.path.basename(path_to_exp)
-            new_path = os.path.join(os.path.dirname(path_to_exp),new_name)
-            os.rename(path_to_exp,new_path)
-            resolution_url = "?image=projection_density&resolution=" + str(resolution)
-            url = download_url + str(exp) + resolution_url
-            fh = urllib.request.urlretrieve(url)
-            filename = str.split((fh[1]._headers[6][1]),'filename=')[1]  #TODO: Consistent??
-            #TODO: do that differenttly ...
-            filename = str.split(filename,";")[0]
-            file_path_nrrd = os.path.join(new_path,filename)
-            shutil.copy(fh[0],file_path_nrrd)
-            os.remove(fh[0])
-            #os.rename(fh[0],file_path_nrrd) only works if source and dest are on the same filesystem
-            file_path_nii = nrrd_to_nifti(file_path_nrrd)
-            os.remove(file_path_nrrd)
-            file_path_2dsurqec = apply_composite(file_path_nii,resolution)
-            os.remove(file_path_nii)
+    if resolution is None:
+       res=[100,25]
+    elif resolution==40:
+       res=[25]
+    elif resolution==200:
+       res=[100]
 
-         #create archives
-      if resolution == 40:
-            sort_and_archive()
-      elif resolution== 200:
-            save_info(info,folder_name)
-            tarname=folder_name + ".tar"
-            create_archive(tarname,path)
+    download_url = "http://api.brain-map.org/grid_data/download_file/"
+    print(res)
+    for resolution in res:
+       if resolution == 100: path_to_res = folder_name
+       if resolution == 25: path_to_res = folder_name + "HD"
+       if not os.path.isdir(path_to_res):os.mkdir(path_to_res)
+       for exp in info:
+          path_to_exp = os.path.join(path_to_res,str(exp))
+          #TODO: look inside if stuff is there...
+          os.mkdir(path_to_exp)
+          path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
+          struc_name=get_identifying_structure(path_to_metadata)
+          struc_name= re.sub(" ","_",struc_name)
+          struc_name=re.sub("[()]","",struc_name)
+          new_name = struc_name + "-" + os.path.basename(path_to_exp)
+          new_path = os.path.join(os.path.dirname(path_to_exp),new_name)
+          os.rename(path_to_exp,new_path)
+          resolution_url = "?image=projection_density&resolution=" + str(resolution)
+          url = download_url + str(exp) + resolution_url
+          fh = urllib.request.urlretrieve(url)
+          filename = str.split((fh[1]._headers[6][1]),'filename=')[1]  #TODO: Consistent??
+          #TODO: do that differenttly ...
+          filename = str.split(filename,";")[0]
+          file_path_nrrd = os.path.join(new_path,filename)
+          shutil.copy(fh[0],file_path_nrrd)
+          os.remove(fh[0])
+          #os.rename(fh[0],file_path_nrrd) only works if source and dest are on the same filesystem
+          file_path_nii = nrrd_to_nifti(file_path_nrrd)
+          os.remove(file_path_nrrd)
+          file_path_2dsurqec = apply_composite(file_path_nii,resolution)
+          os.remove(file_path_nii)
+          #create archives
+       
+       if resolution == 25:
+          sort_and_archive()
+       
+       elif resolution == 100:
+          save_info(info,folder_name)
+          tarname=folder_name + ".tar"
+          create_archive(tarname,folder_name)
 
     return
 
@@ -212,7 +213,7 @@ def apply_composite(file,resolution):
     at.inputs.interpolation = 'BSpline'
     output_image = os.path.join(os.path.dirname(output_image),name)
     at.inputs.output_image = output_image
-    at.inputs.transforms = '/usr/share/abi2dsurqec_Composite.h5'
+    at.inputs.transforms = '/usr/share/mouse-brain-atlases/abi2dsurqec_Composite.h5'
     at.run()
 
     #TODO sform to qform
@@ -271,9 +272,9 @@ def sort_and_archive(path="ABI_connectivity_dataHD"):
    arch_names_suff[12] = "t-z"
    number_of_archives = 12
    number_of_folders = len(os.listdir(path))
-   
+
    for i in range(1,(number_of_archives+1)):
-      folder_name= os.path.join(path,"ABI_connectivity_dataHD" + arch[i] + "-0.1"
+      folder_name= os.path.join(path,"ABI_connectivity_dataHD" + arch[i] + "-0.1")
       if not os.path.isdir(folder_name):os.mkdir(folder_name)
       for file in arch[i]:
          new_path = os.path.join(folder_name,os.path.basename(file))
@@ -294,7 +295,7 @@ def create_archive(tarname,path):
 
 #TODO: Do I really need that? Usefule for expression data, but here?
 def save_info(info,folder_name):
-      path= os.path.join(folder_name,"ABI_connectivity_ids.csv")
+    path= os.path.join(folder_name,"ABI_connectivity_ids.csv")
     f = open(path,"w")
     for exp in info:
         f.write('\n')
@@ -305,11 +306,11 @@ def main():
 #TODO: timeout for urllib
    parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
    parser.add_argument('--package_name','-n',type=str,default="ABI_connectivity_data")
-   parser.add_argument('--package_version','-v',type=str,default="")
+   parser.add_argument('--package_version','-v',type=str,default="9999")
    parser.add_argument('--startRow','-s',type=int,default=0)
    parser.add_argument('--numRows','-r',type=int,default=2000)
    parser.add_argument('--totalRows','-t',type=int,default=-1)
-   parser.add_argument('--resolution','-x',type=int,default=200)
+   parser.add_argument('--resolution','-x')
    args=parser.parse_args()
 
    folder_name = args.package_name + "-" + args.package_version
