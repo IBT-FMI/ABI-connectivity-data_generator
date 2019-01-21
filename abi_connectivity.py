@@ -49,7 +49,7 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
     done = False
 
     while not done:
-        r = "&start_row=%d&num_rows=%d" % (startRow,numRows)
+        r = "&start_row={0}&num_rows={1}".format(startRow,numRows)
         pagedUrl = API_DATA_PATH + "query.json?criteria=model::SectionDataSet,rma::criteria,products%5Bid$eq5%5D,rma::include,specimen(stereotaxic_injections(primary_injection_structure,structures))" + r
         source = urllib.request.urlopen(pagedUrl).read()
         response = json.loads(source)
@@ -75,6 +75,7 @@ def nrrd_to_nifti(file):
     readnrrd = nrrd.read(file)
     data = readnrrd[0]
     header = readnrrd[1]
+    print(header)
     print("Converting " + file)
 
     affine_matrix = numpy.array(header["space directions"],dtype=numpy.float)
@@ -114,7 +115,7 @@ def get_exp_metadata(exp,path):
     return path_to_metadata
 
 
-def download_all_connectivity(info,folder_name,resolution=None):
+def download_all_connectivity(info,folder_name,resolution=200):
     """
     Download all given genes corresponding to SectionDataSetID given in 100um and 25um resolution, converts nrrd to nii, registers to dsurqec... and resamples files to 40 and 200 respectively.
 
@@ -123,14 +124,17 @@ def download_all_connectivity(info,folder_name,resolution=None):
         SectionDataSetID : list(int)
             o=[0.200000002980232 0 0 -6.26999998092651; 0 0.200000002980232 0 -10.6000003814697; 0 0 0.200000002980232 -7.88000011444092; 0 0 0 1]list of SectionDataSetID to download.
     """
-   
+    print(resolution==200)
     if resolution is None:
        res=[100,25]
     elif resolution==40:
        res=[25]
     elif resolution==200:
        res=[100]
-
+       print(res)
+    else:
+       res = [99]
+    print(resolution)
     download_url = "http://api.brain-map.org/grid_data/download_file/"
     print(res)
     for resolution in res:
@@ -143,6 +147,7 @@ def download_all_connectivity(info,folder_name,resolution=None):
           os.mkdir(path_to_exp)
           path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
           struc_name=get_identifying_structure(path_to_metadata)
+          struc_name = struc_name.lower()
           struc_name= re.sub(" ","_",struc_name)
           struc_name=re.sub("[()]","",struc_name)
           new_name = struc_name + "-" + os.path.basename(path_to_exp)
@@ -239,7 +244,7 @@ def download_annotation_file(path):
    file.write(contents)
    file.close()
 
-def sort_and_archive(path="ABI_connectivity_dataHD"):
+def sort_and_archive(path="ABI-connectivity-dataHD"):
    arch = dict()
    arch_names_suff = dict()
    #TODO: There has to be an easier way...
@@ -274,7 +279,7 @@ def sort_and_archive(path="ABI_connectivity_dataHD"):
    number_of_folders = len(os.listdir(path))
 
    for i in range(1,(number_of_archives+1)):
-      folder_name= os.path.join(path,"ABI_connectivity_dataHD" + arch[i] + "-0.1")
+      folder_name= os.path.join(path,"ABI-connectivity-dataHD_" + arch[i] + "-0.1")
       if not os.path.isdir(folder_name):os.mkdir(folder_name)
       for file in arch[i]:
          new_path = os.path.join(folder_name,os.path.basename(file))
@@ -295,7 +300,7 @@ def create_archive(tarname,path):
 
 #TODO: Do I really need that? Usefule for expression data, but here?
 def save_info(info,folder_name):
-    path= os.path.join(folder_name,"ABI_connectivity_ids.csv")
+    path= os.path.join(folder_name,"ABI-connectivity-ids.csv")
     f = open(path,"w")
     for exp in info:
         f.write('\n')
@@ -305,12 +310,12 @@ def main():
 #TODO: some sort of parallel download should be possible, stating totalrows and startrows differently for simultaneous download
 #TODO: timeout for urllib
    parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-   parser.add_argument('--package_name','-n',type=str,default="ABI_connectivity_data")
+   parser.add_argument('--package_name','-n',type=str,default="ABI-connectivity-data")
    parser.add_argument('--package_version','-v',type=str,default="9999")
    parser.add_argument('--startRow','-s',type=int,default=0)
    parser.add_argument('--numRows','-r',type=int,default=2000)
    parser.add_argument('--totalRows','-t',type=int,default=-1)
-   parser.add_argument('--resolution','-x')
+   parser.add_argument('--resolution','-x',type=int)
    args=parser.parse_args()
 
    folder_name = args.package_name + "-" + args.package_version
