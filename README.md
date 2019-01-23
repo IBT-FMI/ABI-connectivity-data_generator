@@ -1,5 +1,5 @@
 
-# ABI connectivty data
+# ABI connectivity data
 
 Script to download connectivity data from the Allen Mouse Brain data portal [ABI-connectivity](http://connectivity.brain-map.org/). Script will query the database, download available data, convert from nrrd format to NIfTI and registers data.
 
