@@ -174,7 +174,7 @@ def download_all_connectivity(info,folder_name,resolution=200):
 
 		elif resolution == 100:
 			save_info(info,folder_name)
-			tarname=folder_name + ".tar"
+			tarname=folder_name + ".tar.xz"
 			create_archive(tarname,folder_name)
 
 	return
@@ -284,7 +284,7 @@ def sort_and_archive(path="ABI-connectivity-dataHD"):
 		for file in arch[i]:
 			new_path = os.path.join(folder_name,os.path.basename(file))
 			os.rename(file,new_path)
-		tarname=folder_name + ".tar"
+		tarname=folder_name + ".tar.xz"
 		create_archive(tarname,folder_name)
 
 
@@ -293,7 +293,7 @@ def create_archive(tarname,path):
 	tar_name = tarname
 	print(path)
 	print(tar_name)
-	with tarfile.open(tar_name, "w") as tar_handle:
+	with tarfile.open(tar_name, "w:xz") as tar_handle:
 		for root,dirs,files in os.walk(path):
 			for file in files:
 				tar_handle.add(os.path.join(root,file))
