@@ -8,7 +8,7 @@ Script to download and prepare connectivity data from the Allen Mouse Brain data
 Current recommended release in bold typeface:
 
 * **[ABI-connectivity-data-0.2.tar.xz](http://chymera.eu/distfiles/ABI-connectivity-data-0.2.tar.xz)** \[[SHA512 checksum](http://chymera.eu/distfiles/ABI-connectivity-data-0.2.sha512)\]
-* **[ABI-connectivity-data-0.1.tar.xz](http://chymera.eu/distfiles/ABI-connectivity-data-0.1.tar.xz)** \[[SHA512 checksum](http://chymera.eu/distfiles/ABI-connectivity-data-0.1.sha512)\]
+* [ABI-connectivity-data-0.1.tar.xz](http://chymera.eu/distfiles/ABI-connectivity-data-0.1.tar.xz) \[[SHA512 checksum](http://chymera.eu/distfiles/ABI-connectivity-data-0.1.sha512)\]
 
 # Citation Notice
 
