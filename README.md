@@ -24,7 +24,7 @@ python abi_connectivity.py -v 0.5 -x 200
 ```
 
 This will create the archive with the newest files at 200um resolution fetched from upstream and processed according to the instructions standardized in this package.
-The version suffix will be `0.5` (as per the `-v 0.5` parameter).  
+The version suffix will be `0.5` (as per the `-v 0.5` parameter).
 
 To create the ABI-connectivity-dataHD archives, run:
 
