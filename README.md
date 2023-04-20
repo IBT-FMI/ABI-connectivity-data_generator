@@ -1,7 +1,6 @@
-
 # ABI Connectivity Data
 
-Script to download and prepare connectivity data from the Allen Mouse Brain data portal [ABI-connectivity](http://connectivity.brain-map.org/) [[1][1]]. This script will query the database, download available data, convert it from the nrrd format to NIfTI, and register it to a standard space (DSURQEC, as seen in the relevant [mouse brain preprocessing article](https://www.biorxiv.org/content/10.1101/619650v2)).
+Script to download and prepare connectivity data from the Allen Mouse Brain data portal [ABI-connectivity](http://connectivity.brain-map.org/) [[1][1]]. This script will query the database, download available data, convert it from the nrrd format to NIfTI, and register it to a standard space (DSURQEC, as seen in the relevant [mouse brain preprocessing article](https://www.sciencedirect.com/science/article/pii/S1053811921006625)).
 
 # ABI Connectivity Data Package Releases
 
