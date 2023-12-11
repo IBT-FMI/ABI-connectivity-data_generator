@@ -73,5 +73,10 @@ oci-image:
 oci-push:
 	$(OCI_BINARY) push ${FQDN_IMAGE}
 
+# Push containers
+.PHONY: clean
+clean:
+	rm ABI-connectivity-data*
+
 
 
