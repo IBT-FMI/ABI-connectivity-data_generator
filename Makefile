@@ -42,7 +42,7 @@ data:
 		-v ${SCRATCH_PATH}:/root/.scratch \
 		--workdir /root/src/ABI-connectivity \
 		${FQDN_IMAGE} \
-		python abi_connectivity.py ${OCI_BINARY}
+		python code/abi_connectivity.py
 
 data-interactive:
 	$(OCI_BINARY) run \
