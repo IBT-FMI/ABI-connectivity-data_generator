@@ -76,7 +76,7 @@ oci-push:
 # Push containers
 .PHONY: clean
 clean:
-	rm ABI-connectivity-data*
+	@rm -rf ABI-connectivity-data*
 
 
 
