@@ -78,7 +78,7 @@ def nrrd_to_nifti(file):
 	print(header)
 	print("Converting " + file)
 
-	affine_matrix = numpy.array(header["space directions"],dtype=numpy.float)
+	affine_matrix = numpy.array(header["space directions"],dtype=float)
 	affine_matrix = affine_matrix*0.001
 	affine_matrix = numpy.insert(affine_matrix,3,[0,0,0], axis=1)
 	affine_matrix = numpy.insert(affine_matrix,3,[0,0,0,1], axis=0)
