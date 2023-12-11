@@ -218,7 +218,7 @@ def apply_composite(file,resolution):
 	at.inputs.interpolation = 'BSpline'
 	output_image = os.path.join(os.path.dirname(output_image),name)
 	at.inputs.output_image = output_image
-	at.inputs.transforms = '/usr/share/mouse-brain-atlases/abi2dsurqec_Composite.h5'
+	at.inputs.transforms = '/usr/share/mouse-brain-templates/abi2dsurqec_Composite.h5'
 	at.run()
 
 	#TODO sform to qform

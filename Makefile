@@ -30,11 +30,15 @@ __check_defined = \
 ifeq ($(DISTFILE_CACHE_PATH),)
     # If not set, don't add it as an option
 else
-    DISTFILE_CACHE_CMD =-v $(DISTFILE_CACHE_PATH):/var/cache/distfiles 
+    DISTFILE_CACHE_CMD =-v $(DISTFILE_CACHE_PATH):/var/cache/distfiles
 endif
 
-
+.PHONY: data
 data:
+	python code/abi_connectivity.py
+
+.PHONY: data-oci
+data-oci:
 	$(OCI_BINARY) run \
 		-it \
 		--rm \
@@ -42,9 +46,10 @@ data:
 		-v ${SCRATCH_PATH}:/root/.scratch \
 		--workdir /root/src/ABI-connectivity \
 		${FQDN_IMAGE} \
-		python code/abi_connectivity.py
+		make data
 
-data-interactive:
+.PHONY: data-oci-interactive
+data-oci-interactive:
 	$(OCI_BINARY) run \
 		-it \
 		--rm \
@@ -57,12 +62,14 @@ data-interactive:
 
 
 # Build data analysis container
+.PHONY: oci-image
 oci-image:
 	$(OCI_BINARY) build . $(DISTFILE_CACHE_CMD) \
 		-f code/Containerfile \
 		-t ${FQDN_IMAGE}
 
 # Push containers
+.PHONY: oci-push
 oci-push:
 	$(OCI_BINARY) push ${FQDN_IMAGE}
 
