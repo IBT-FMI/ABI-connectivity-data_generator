@@ -5,7 +5,7 @@ REGISTRY=docker.io
 REPOSITORY=centerforopenneuroscience
 
 IMAGE_NAME=abi-connectivity
-IMAGE_TAG=0.0.1-alpha
+IMAGE_TAG=0.0.1
 
 FQDN_IMAGE=${REGISTRY}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
 

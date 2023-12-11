@@ -13,8 +13,9 @@ KEYWORDS=""
 DEPEND=""
 RDEPEND="
 	dev-python/numpy
-	sci-libs/nibabel
 	dev-python/pynrrd
+	sci-biology/ants
 	sci-biology/mouse-brain-templates
+	sci-libs/nibabel
 	sci-libs/nipype
 "
