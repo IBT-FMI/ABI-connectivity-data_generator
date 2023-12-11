@@ -34,11 +34,11 @@ else
 endif
 
 .PHONY: data
-data:
+data: clean
 	python code/abi_connectivity.py
 
 .PHONY: data-oci
-data-oci:
+data-oci: clean
 	$(OCI_BINARY) run \
 		-it \
 		--rm \
@@ -49,7 +49,7 @@ data-oci:
 		make data
 
 .PHONY: data-oci-interactive
-data-oci-interactive:
+data-oci-interactive: clean
 	$(OCI_BINARY) run \
 		-it \
 		--rm \
