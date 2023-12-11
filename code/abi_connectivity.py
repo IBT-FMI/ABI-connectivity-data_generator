@@ -115,7 +115,7 @@ def get_exp_metadata(exp,path):
 	return path_to_metadata
 
 
-def download_all_connectivity(info,folder_name,resolution=200):
+def download_all_connectivity(info,dir_name,resolution=200):
 	"""
 	Download all given genes corresponding to SectionDataSetID given in 100um and 25um resolution, converts nrrd to nii, registers to dsurqec... and resamples files to 40 and 200 respectively.
 
@@ -138,8 +138,8 @@ def download_all_connectivity(info,folder_name,resolution=200):
 	download_url = "http://api.brain-map.org/grid_data/download_file/"
 	print(res)
 	for resolution in res:
-		if resolution == 100: path_to_res = folder_name
-		if resolution == 25: path_to_res = folder_name + "HD"
+		if resolution == 100: path_to_res = dir_name
+		if resolution == 25: path_to_res = dir_name + "HD"
 		if not os.path.isdir(path_to_res):os.mkdir(path_to_res)
 		for exp in info:
 			path_to_exp = os.path.join(path_to_res,str(exp))
@@ -173,9 +173,9 @@ def download_all_connectivity(info,folder_name,resolution=200):
 			sort_and_archive()
 
 		elif resolution == 100:
-			save_info(info,folder_name)
-			tarname=folder_name + ".tar.xz"
-			create_archive(tarname,folder_name)
+			save_info(info,dir_name)
+			tarname=dir_name + ".tar.xz"
+			create_archive(tarname,dir_name)
 
 	return
 
@@ -279,13 +279,13 @@ def sort_and_archive(path="ABI-connectivity-dataHD"):
 	number_of_folders = len(os.listdir(path))
 
 	for i in range(1,(number_of_archives+1)):
-		folder_name= os.path.join(path,"ABI-connectivity-dataHD_" + arch[i] + "-0.1")
-		if not os.path.isdir(folder_name):os.mkdir(folder_name)
+		dir_name= os.path.join(path,"ABI-connectivity-dataHD_" + arch[i] + "-0.1")
+		if not os.path.isdir(dir_name):os.mkdir(dir_name)
 		for file in arch[i]:
-			new_path = os.path.join(folder_name,os.path.basename(file))
+			new_path = os.path.join(dir_name,os.path.basename(file))
 			os.rename(file,new_path)
-		tarname=folder_name + ".tar.xz"
-		create_archive(tarname,folder_name)
+		tarname=dir_name + ".tar.xz"
+		create_archive(tarname,dir_name)
 
 
 def create_archive(tarname,path):
@@ -299,8 +299,8 @@ def create_archive(tarname,path):
 				tar_handle.add(os.path.join(root,file))
 
 #TODO: Do I really need that? Usefule for expression data, but here?
-def save_info(info,folder_name):
-	path= os.path.join(folder_name,"ABI-connectivity-ids.csv")
+def save_info(info,dir_name):
+	path= os.path.join(dir_name,"ABI-connectivity-ids.csv")
 	f = open(path,"w")
 	for exp in info:
 		f.write('\n')
@@ -318,10 +318,10 @@ def main():
 	parser.add_argument('--resolution','-x',type=int)
 	args=parser.parse_args()
 
-	folder_name = args.package_name + "-" + args.package_version
-	download_annotation_file(folder_name)
+	dir_name = args.package_name + "-" + args.package_version
+	download_annotation_file(dir_name)
 	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
-	download_all_connectivity(info,folder_name=folder_name,resolution=args.resolution)
+	download_all_connectivity(info,dir_name=dir_name,resolution=args.resolution)
 	#save_info(info)
 	#create_archive()
 	#sort_and_archive()
