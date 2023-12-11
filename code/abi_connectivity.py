@@ -196,10 +196,10 @@ def apply_composite(file,resolution):
 	at.inputs.dimension = 3
 	at.inputs.input_image = file
 	if resolution == 100:
-		ref_image = '/usr/share/mouse-brain-atlases/dsurqec_200micron_masked.nii'
+		ref_image = '/usr/share/mouse-brain-templates/dsurqec_200micron_masked.nii'
 		resolution = 200
 	else:
-		ref_image = '/usr/share/mouse-brain-atlases/dsurqec_40micron_masked.nii'
+		ref_image = '/usr/share/mouse-brain-templates/dsurqec_40micron_masked.nii'
 		resolution = 40
 
 	#TODO: theres got to be an easier way...
