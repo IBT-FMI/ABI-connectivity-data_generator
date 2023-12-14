@@ -14,10 +14,12 @@ import tarfile
 import re
 import nrrd
 import xml.etree.ElementTree as et
+from datetime import datetime
 from collections import defaultdict
 from nipype.interfaces.ants import ApplyTransforms
 from nipype.interfaces.ants.base import ANTSCommand, ANTSCommandInputSpec
 from nipype.interfaces.base import BaseInterface, BaseInterfaceInputSpec, traits, File, Str, TraitedSpec, Directory, CommandLineInputSpec, CommandLine, InputMultiPath, isdefined, Bunch, OutputMultiPath
+from pathlib import Path
 
 #from nipype.interfaces.fsl import fslorient
 
@@ -230,8 +232,6 @@ def download_annotation_file(path):
 	filename_xml = "structure_graph.xml"
 	filename_json = "structure_graph.json"
 
-	if not os.path.isdir(path):os.mkdir(path)
-
 	s = urllib.request.urlopen(anno_url_json)
 	contents = s.read()
 	file = open(os.path.join(path,filename_json), 'wb')
@@ -318,7 +318,14 @@ def main():
 	parser.add_argument('--resolution','-x',type=int)
 	args=parser.parse_args()
 
-	dir_name = args.package_name + "-" + args.package_version
+	now = datetime.today().strftime('%Y-%m-%dT%H:%M:%S')
+	dir_name = os.path.join(
+			"/var/tmp/",
+			args.package_name,
+			now,
+			f"{args.package_name}-{args.package_version}",
+			)
+	Path(dir_name).mkdir(parents=True, exist_ok=True)
 	download_annotation_file(dir_name)
 	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
 	download_all_connectivity(info,dir_name=dir_name,resolution=args.resolution)

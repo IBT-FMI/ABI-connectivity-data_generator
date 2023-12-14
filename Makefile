@@ -12,7 +12,7 @@ FQDN_IMAGE=${REGISTRY}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
 # PATH for scratch directory storing intermidiate results etc;
 # By default -- all data including intermediate results are under this folder (YODA!)
 ifeq ($(SCRATCH_PATH),)
-	SCRATCH_PATH = $(PWD)/scratch
+	SCRATCH_PATH = /var/tmp/ABI-conectivity-data/
 endif
 
 OCI_BINARY?=podman
@@ -43,7 +43,7 @@ data-oci: clean
 		-it \
 		--rm \
 		-v ${PWD}:/root/src/ABI-connectivity \
-		-v ${SCRATCH_PATH}:/root/.scratch \
+		-v ${SCRATCH_PATH}:/var/tmp/ABI-connectivity-data/ \
 		--workdir /root/src/ABI-connectivity \
 		${FQDN_IMAGE} \
 		make data
