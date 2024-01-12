@@ -172,7 +172,7 @@ def download_all_connectivity(info,dir_name,resolution=200):
 			#create archives
 
 		if resolution == 25:
-			sort_and_archive()
+			sort_and_archive(path_to_res)
 
 		elif resolution == 100:
 			save_info(info,dir_name)
@@ -244,7 +244,7 @@ def download_annotation_file(path):
 	file.write(contents)
 	file.close()
 
-def sort_and_archive(path="ABI-connectivity-dataHD"):
+def sort_and_archive(path):
 	arch = dict()
 	arch_names_suff = dict()
 	#TODO: There has to be an easier way...
@@ -263,22 +263,31 @@ def sort_and_archive(path="ABI-connectivity-dataHD"):
 	arch_names_suff[6] = "m"
 	arch[7] = glob.glob(os.path.join(path,"[NnOo]*"))
 	arch_names_suff[7] = "n-o"
-	p_list = sorted(glob.glob(os.path.join(path,"[Pp]*")))
-	ind = [p_list.index(i) for i in p_list if 'Primary' in i][0]
-	arch[8] = p_list[0:ind]
-	arch_names_suff[8] = "pa-pre"
-	arch[9]= p_list[ind:len(p_list)]
-	arch_names_suff[9] = "pri-po"
+	#p_list = sorted(glob.glob(os.path.join(path,"[Pp]*")))
+	#print(p_list)
+	#ind = [p_list.index(i) for i in p_list if 'Primary' in i][0]
+	#arch[8] = p_list[0:ind]
+	#arch_names_suff[8] = "pa-pre"
+	#arch[9]= p_list[ind:len(p_list)]
+	#arch_names_suff[9] = "pri-po"
+	arch[10] = glob.glob(os.path.join(path,"[Pp]*"))
+	arch_names_suff[8] = "p"
 	arch[10] = glob.glob(os.path.join(path,"[QqRR]*"))
-	arch_names_suff[10] = "q-r"
+	arch_names_suff[9] = "q-r"
 	arch[11] = glob.glob(os.path.join(path,"[Ss]*"))
-	arch_names_suff[1] = "a"
+	arch_names_suff[10] = "s"
 	arch[12] = glob.glob(os.path.join(path,"[TtUuVvWwXxYyZz]*"))
-	arch_names_suff[12] = "t-z"
-	number_of_archives = 12
+	arch_names_suff[11] = "t-z"
+	number_of_archives = 11
 	number_of_folders = len(os.listdir(path))
 
 	for i in range(1,(number_of_archives+1)):
+		print(arch[1])
+		print(arch[1])
+		print(arch[1])
+		print(arch[1])
+		print(arch[1])
+		print(arch[1])
 		dir_name= os.path.join(path,"ABI-connectivity-dataHD_" + arch[i] + "-0.1")
 		if not os.path.isdir(dir_name):os.mkdir(dir_name)
 		for file in arch[i]:
@@ -328,6 +337,9 @@ def main():
 	Path(dir_name).mkdir(parents=True, exist_ok=True)
 	download_annotation_file(dir_name)
 	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
+	print(info)
+	info = [266964075, 157556400, 311845972]
+	print(info)
 	download_all_connectivity(info,dir_name=dir_name,resolution=args.resolution)
 	#save_info(info)
 	#create_archive()
