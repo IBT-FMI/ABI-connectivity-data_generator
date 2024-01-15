@@ -281,13 +281,11 @@ def main():
 	Path(dir_name).mkdir(parents=True, exist_ok=True)
 	download_annotation_file(dir_name)
 	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
+	# In case there are any failures, the specific ID can be investigated by redefining `info` here.
 	#print(info)
 	#info = [157556400, 311845972]
 	#print(info)
 	download_all_connectivity(info, dir_name=dir_name, resolution=args.resolution)
-	#save_info(info)
-	#create_archive()
-	#sort_and_archive()
 
 
 if __name__ == "__main__":
