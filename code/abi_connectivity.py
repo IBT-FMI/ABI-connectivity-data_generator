@@ -59,7 +59,6 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
 		for x in response['msg']:
 
 			if x['failed'] == False :
-				print(x['id'])
 				info.append(x['id'])
 		if totalRows < 0:
 			totalRows = int(response['total_rows'])
@@ -73,12 +72,11 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
 
 
 def nrrd_to_nifti(file):
-	print(f"Reading " + file)
+	print(f"Reading `{file}`.")
 	readnrrd = nrrd.read(file)
 	data = readnrrd[0]
 	header = readnrrd[1]
-	print(header)
-	print("Converting " + file)
+	print(f"Converting `{file}`.")
 
 	affine_matrix = numpy.array(header["space directions"],dtype=float)
 	affine_matrix = affine_matrix*0.001
