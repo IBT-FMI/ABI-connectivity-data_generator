@@ -73,7 +73,7 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
 
 
 def nrrd_to_nifti(file):
-	print("Reading " + file)
+	print(f"Reading " + file)
 	readnrrd = nrrd.read(file)
 	data = readnrrd[0]
 	header = readnrrd[1]
@@ -133,7 +133,6 @@ def download_all_connectivity(info,dir_name,resolution=200):
 		res=[25]
 	elif resolution==200:
 		res=[100]
-		print(res)
 	else:
 		res = [99]
 
@@ -251,7 +250,6 @@ def download_annotation_file(path):
 
 def create_archive(tar_path, files_path):
 	with tarfile.open(tar_path, "w:xz") as tar_handle:
-		print(files_path)
 		tar_handle.add(files_path, arcname=os.path.basename(files_path))
 
 
@@ -285,9 +283,9 @@ def main():
 	Path(dir_name).mkdir(parents=True, exist_ok=True)
 	download_annotation_file(dir_name)
 	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
-	print(info)
-	info = [157556400, 311845972]
-	print(info)
+	#print(info)
+	#info = [157556400, 311845972]
+	#print(info)
 	download_all_connectivity(info, dir_name=dir_name, resolution=args.resolution)
 	#save_info(info)
 	#create_archive()
