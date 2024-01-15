@@ -126,7 +126,7 @@ def download_all_connectivity(info,dir_name,resolution=200):
 	SectionDataSetID : list(int)
 		o=[0.200000002980232 0 0 -6.26999998092651; 0 0.200000002980232 0 -10.6000003814697; 0 0 0.200000002980232 -7.88000011444092; 0 0 0 1]list of SectionDataSetID to download.
 	"""
-	print(resolution==200)
+
 	if resolution is None:
 		res=[100,25]
 	elif resolution==40:
@@ -136,13 +136,16 @@ def download_all_connectivity(info,dir_name,resolution=200):
 		print(res)
 	else:
 		res = [99]
-	print(resolution)
+
 	download_url = "http://api.brain-map.org/grid_data/download_file/"
-	print(res)
+
 	for resolution in res:
-		if resolution == 100: path_to_res = dir_name
-		if resolution == 25: path_to_res = dir_name + "HD"
-		if not os.path.isdir(path_to_res):os.mkdir(path_to_res)
+		if resolution == 100:
+			path_to_res = dir_name
+		if resolution <= 40:
+			path_to_res = dir_name + "HD"
+		if not os.path.isdir(path_to_res):
+			os.mkdir(path_to_res)
 		for exp in info:
 			path_to_exp = os.path.join(path_to_res,str(exp))
 			#TODO: look inside if stuff is there...
@@ -169,15 +172,16 @@ def download_all_connectivity(info,dir_name,resolution=200):
 			os.remove(file_path_nrrd)
 			file_path_2dsurqec = apply_composite(file_path_nii,resolution)
 			os.remove(file_path_nii)
-			#create archives
 
+		# Create archives:
 		if resolution == 25:
-			sort_and_archive(path_to_res)
-
+			save_info(info,dir_name)
+			tarname = dir_name + "HD" + ".tar.xz"
+			create_archive(tarname, path_to_res)
 		elif resolution == 100:
 			save_info(info,dir_name)
-			tarname=dir_name + ".tar.xz"
-			create_archive(tarname,dir_name)
+			tarname = dir_name + ".tar.xz"
+			create_archive(tarname, path_to_res)
 
 	return
 
@@ -244,70 +248,14 @@ def download_annotation_file(path):
 	file.write(contents)
 	file.close()
 
-def sort_and_archive(path):
-	arch = dict()
-	arch_names_suff = dict()
-	#TODO: There has to be an easier way...
-	#TODO:check for any file that does not start with a letter
-	arch[1] = glob.glob(os.path.join(path,"[Aa]*"))
-	arch_names_suff[1] = "a"
-	arch[2] = glob.glob(os.path.join(path,"[BbCc]*"))
-	arch_names_suff[2] = "b-c"
-	arch[3] = glob.glob(os.path.join(path,"[DdEe]*"))
-	arch_names_suff[1] = "d-e"
-	arch[4] = glob.glob(os.path.join(path,"[FfGgHhIiJj]*"))
-	arch_names_suff[4] = "f-j"
-	arch[5]= glob.glob(os.path.join(path,"[KkLl]*"))
-	arch_names_suff[5] = "k-l"
-	arch[6] = glob.glob(os.path.join(path,"[Mm]*"))
-	arch_names_suff[6] = "m"
-	arch[7] = glob.glob(os.path.join(path,"[NnOo]*"))
-	arch_names_suff[7] = "n-o"
-	#p_list = sorted(glob.glob(os.path.join(path,"[Pp]*")))
-	#print(p_list)
-	#ind = [p_list.index(i) for i in p_list if 'Primary' in i][0]
-	#arch[8] = p_list[0:ind]
-	#arch_names_suff[8] = "pa-pre"
-	#arch[9]= p_list[ind:len(p_list)]
-	#arch_names_suff[9] = "pri-po"
-	arch[10] = glob.glob(os.path.join(path,"[Pp]*"))
-	arch_names_suff[8] = "p"
-	arch[10] = glob.glob(os.path.join(path,"[QqRR]*"))
-	arch_names_suff[9] = "q-r"
-	arch[11] = glob.glob(os.path.join(path,"[Ss]*"))
-	arch_names_suff[10] = "s"
-	arch[12] = glob.glob(os.path.join(path,"[TtUuVvWwXxYyZz]*"))
-	arch_names_suff[11] = "t-z"
-	number_of_archives = 11
-	number_of_folders = len(os.listdir(path))
 
-	for i in range(1,(number_of_archives+1)):
-		print(arch[1])
-		print(arch[1])
-		print(arch[1])
-		print(arch[1])
-		print(arch[1])
-		print(arch[1])
-		dir_name= os.path.join(path,"ABI-connectivity-dataHD_" + arch[i] + "-0.1")
-		if not os.path.isdir(dir_name):os.mkdir(dir_name)
-		for file in arch[i]:
-			new_path = os.path.join(dir_name,os.path.basename(file))
-			os.rename(file,new_path)
-		tarname=dir_name + ".tar.xz"
-		create_archive(tarname,dir_name)
+def create_archive(tar_path, files_path):
+	with tarfile.open(tar_path, "w:xz") as tar_handle:
+		print(files_path)
+		tar_handle.add(files_path, arcname=os.path.basename(files_path))
 
 
-def create_archive(tarname,path):
-	path = path
-	tar_name = tarname
-	print(path)
-	print(tar_name)
-	with tarfile.open(tar_name, "w:xz") as tar_handle:
-		for root,dirs,files in os.walk(path):
-			for file in files:
-				tar_handle.add(os.path.join(root,file))
-
-#TODO: Do I really need that? Usefule for expression data, but here?
+#TODO: Do I really need that? Useful for expression data, but here?
 def save_info(info,dir_name):
 	path= os.path.join(dir_name,"ABI-connectivity-ids.csv")
 	f = open(path,"w")
@@ -338,9 +286,9 @@ def main():
 	download_annotation_file(dir_name)
 	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
 	print(info)
-	info = [266964075, 157556400, 311845972]
+	info = [157556400, 311845972]
 	print(info)
-	download_all_connectivity(info,dir_name=dir_name,resolution=args.resolution)
+	download_all_connectivity(info, dir_name=dir_name, resolution=args.resolution)
 	#save_info(info)
 	#create_archive()
 	#sort_and_archive()
