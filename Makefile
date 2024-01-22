@@ -16,7 +16,10 @@ ifeq ($(SCRATCH_PATH),)
 endif
 
 OCI_BINARY?=podman
+RELEASE_VERSION?=9999
+RESOLUTION?=9999 # specified in microns
 SING_BINARY?=singularity
+PACKAGE_NAME=ABI-connectivity-data
 
 DISTFILE_CACHE_CMD :=
 
@@ -35,7 +38,10 @@ endif
 
 .PHONY: data
 data: clean
-	python code/abi_connectivity.py
+	python code/abi_connectivity.py \
+	    --version=${RELEASE_VERSION} \
+	    --resolution=${RESOLUTION} \
+	    --package-name=${PACKAGE_NAME}
 
 .PHONY: data-oci
 data-oci: clean
@@ -43,7 +49,7 @@ data-oci: clean
 		-it \
 		--rm \
 		-v ${PWD}:/root/src/ABI-connectivity \
-		-v ${SCRATCH_PATH}:/var/tmp/ABI-connectivity-data/ \
+		-v ${SCRATCH_PATH}:/var/tmp/${PACKAGE_NAME}/ \
 		--workdir /root/src/ABI-connectivity \
 		${FQDN_IMAGE} \
 		make data
@@ -74,9 +80,9 @@ oci-push:
 	$(OCI_BINARY) push ${FQDN_IMAGE}
 
 # Push containers
-.PHONY: clean
-clean:
-	@rm -rf ABI-connectivity-data*
+#.PHONY: clean
+#clean:
+#	@rm -rf ABI-connectivity-data*
 
 
 

@@ -264,7 +264,7 @@ def main():
 	#TODO: timeout for urllib
 	parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument('--package_name','-n',type=str,default="ABI-connectivity-data")
-	parser.add_argument('--package_version','-v',type=str,default="9999")
+	parser.add_argument('--version','-v',type=str,default="9999")
 	parser.add_argument('--startRow','-s',type=int,default=0)
 	parser.add_argument('--numRows','-r',type=int,default=2000)
 	parser.add_argument('--totalRows','-t',type=int,default=-1)
@@ -276,7 +276,7 @@ def main():
 			"/var/tmp/",
 			args.package_name,
 			now,
-			f"{args.package_name}-{args.package_version}",
+			f"{args.package_name}-{args.version}",
 			)
 	Path(dir_name).mkdir(parents=True, exist_ok=True)
 	download_annotation_file(dir_name)
