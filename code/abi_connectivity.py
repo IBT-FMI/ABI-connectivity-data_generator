@@ -115,7 +115,7 @@ def get_exp_metadata(exp,path):
 	return path_to_metadata
 
 
-def download_all_connectivity(info,dir_name,resolution=200):
+def download_all_connectivity(info,dir_name,resolution=[100,25]):
 	"""
 	Download all given genes corresponding to SectionDataSetID given in 100um and 25um resolution, converts nrrd to nii, registers to dsurqec... and resamples files to 40 and 200 respectively.
 
@@ -126,13 +126,7 @@ def download_all_connectivity(info,dir_name,resolution=200):
 	"""
 
 	if resolution is None:
-		res=[100,25]
-	elif resolution==40:
-		res=[25]
-	elif resolution==200:
-		res=[100]
-	else:
-		res = [99]
+		resolution=[100,25]
 
 	download_url = "http://api.brain-map.org/grid_data/download_file/"
 
