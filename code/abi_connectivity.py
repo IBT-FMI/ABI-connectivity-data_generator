@@ -21,8 +21,6 @@ from nipype.interfaces.ants.base import ANTSCommand, ANTSCommandInputSpec
 from nipype.interfaces.base import BaseInterface, BaseInterfaceInputSpec, traits, File, Str, TraitedSpec, Directory, CommandLineInputSpec, CommandLine, InputMultiPath, isdefined, Bunch, OutputMultiPath
 from pathlib import Path
 
-#from nipype.interfaces.fsl import fslorient
-
 API_SERVER = "http://api.brain-map.org/"
 API_DATA_PATH = API_SERVER + "api/v2/data/"
 
@@ -267,6 +265,12 @@ def main():
 
 	now = datetime.today().strftime('%Y-%m-%dT%H:%M:%S')
 	dir_name = os.path.join(
+			"/var/tmp/",
+			args.package_name,
+			now,
+			f"{args.package_name}-{args.version}",
+			)
+	source_dir_name = os.path.join(
 			"/var/tmp/",
 			args.package_name,
 			now,
