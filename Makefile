@@ -48,7 +48,7 @@ sourcedata-oci: clean
 		-v ${PWD}:/root/src/ABI-connectivity \
 		--workdir /root/src/ABI-connectivity \
 		${FQDN_IMAGE} \
-		make data
+		make sourcedata
 
 .PHONY: processed-data
 processed-data:
