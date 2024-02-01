@@ -14,6 +14,8 @@ import tarfile
 import re
 import nrrd
 import xml.etree.ElementTree as et
+import glob
+#import xmltodict
 from datetime import datetime
 from collections import defaultdict
 from nipype.interfaces.ants import ApplyTransforms
@@ -24,7 +26,11 @@ from pathlib import Path
 API_SERVER = "http://api.brain-map.org/"
 API_DATA_PATH = API_SERVER + "api/v2/data/"
 
-def GetExpID(startRow=0,numRows=2000,totalRows = -1):
+def get_exp_id(
+	startRow=0,
+	numRows=2000,
+	totalRows=-1,
+	):
 	"""
 	Queries the Allen Mouse Brain Institute website for all gene expression data available for download.
 
@@ -69,7 +75,9 @@ def GetExpID(startRow=0,numRows=2000,totalRows = -1):
 	return info
 
 
-def nrrd_to_nifti(file):
+def nrrd_to_nifti(file,
+	target_dir=False,
+	):
 	print(f"Reading `{file}`.")
 	readnrrd = nrrd.read(file)
 	data = readnrrd[0]
@@ -89,7 +97,10 @@ def nrrd_to_nifti(file):
 	data = data[:,::-1,:]
 	data = data[::-1,:,:] #TODO: Check for Atlas files!!!!!!
 	img = nibabel.Nifti1Image(data,affine_matrix)
-	nii_path = os.path.join(os.path.dirname(file), os.path.basename(file).split(".")[0] + '.nii')
+	if not target_dir:
+		nii_path = os.path.join(os.path.dirname(file), os.path.basename(file).split(".")[0] + '.nii')
+	else:
+		nii_path = os.path.join(target_dir, os.path.basename(file).split(".")[0] + '.nii')
 	nibabel.save(img,nii_path)
 
 	return nii_path
@@ -111,6 +122,75 @@ def get_exp_metadata(exp,path):
 	file.close()
 
 	return path_to_metadata
+
+
+def get_sourcedata(info, dir_name,
+	resolution=100,
+	):
+	"""
+	Download all given genes corresponding to SectionDataSetID given in 100um and 25um resolution, converts nrrd to nii, registers to dsurqec... and resamples files to 40 and 200 respectively.
+
+	Parameters:
+	-----------
+	SectionDataSetID : list(int)
+		o=[0.200000002980232 0 0 -6.26999998092651; 0 0.200000002980232 0 -10.6000003814697; 0 0 0.200000002980232 -7.88000011444092; 0 0 0 1]list of SectionDataSetID to download.
+	"""
+
+	download_url = "http://api.brain-map.org/grid_data/download_file/"
+
+	for exp in info:
+		path_to_exp = os.path.join(dir_name,str(exp))
+		#TODO: look inside if stuff is there...
+		os.mkdir(path_to_exp)
+		path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
+		struc_name=get_identifying_structure(path_to_metadata)
+		struc_name = struc_name.lower()
+		struc_name= re.sub(" ","_",struc_name)
+		struc_name=re.sub("[()]","",struc_name)
+		new_name = struc_name + "-" + os.path.basename(path_to_exp)
+		new_path = os.path.join(os.path.dirname(path_to_exp),new_name)
+		os.rename(path_to_exp,new_path)
+		resolution_url = "?image=projection_density&resolution=" + str(resolution)
+		url = download_url + str(exp) + resolution_url
+		print(url)
+		fh = urllib.request.urlretrieve(url)
+		filename = str.split((fh[1]._headers[6][1]),'filename=')[1] #TODO: Consistent??
+		#TODO: do that differenttly ...
+		filename = str.split(filename,";")[0]
+		file_path_nrrd = os.path.join(new_path,filename)
+		shutil.copy(fh[0],file_path_nrrd)
+		os.remove(fh[0])
+		#os.rename(fh[0],file_path_nrrd) only works if source and dest are on the same filesystem
+
+	return
+
+
+def process_data(source_dir, data_dir, resolution=100):
+	for nrrd_dir in os.listdir(source_dir):
+		if os.path.isdir(os.path.join(source_dir,nrrd_dir)):
+			nrrd_data = glob.glob(os.path.join(source_dir,nrrd_dir,"*.nrrd"))
+			xml_data = glob.glob(os.path.join(source_dir,nrrd_dir,"*.xml"))
+			target_dir = os.path.join(data_dir, nrrd_dir)
+			os.makedirs(target_dir, exist_ok=True)
+			nii_data = nrrd_to_nifti(nrrd_data[0], target_dir)
+			file_path_2dsurqec = apply_composite(nii_data,resolution=resolution)
+			os.remove(nii_data)
+
+
+
+def bids_rename(data_file, metadata_file):
+    file_directory = os.path.dirname(data_file)
+    file=open("employee.xml","r")
+    xml_string=file.read()
+	tree = et.parse(metadata_file)
+	root = tree.getroot()
+	struc = root.findall('.//primary-injection-structure/safe-name')[0]
+    print(struct)
+    #print("The XML string is:")
+    #print(xml_string)
+    #python_dict=xmltodict.parse(xml_string)
+    #seed = 
+    #os.rename(data_file, new_name)
 
 
 def download_all_connectivity(info,dir_name,resolution=[100,25]):
@@ -255,7 +335,8 @@ def main():
 	#TODO: some sort of parallel download should be possible, stating totalrows and startrows differently for simultaneous download
 	#TODO: timeout for urllib
 	parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-	parser.add_argument('--package_name','-n',type=str,default="ABI-connectivity-data")
+	parser.add_argument('--download-only', action='store_true', help='Only download source data.')
+	parser.add_argument('--process-only', action='store_true', help='Only process already present source data.')
 	parser.add_argument('--version','-v',type=str,default="9999")
 	parser.add_argument('--startRow','-s',type=int,default=0)
 	parser.add_argument('--numRows','-r',type=int,default=2000)
@@ -264,26 +345,22 @@ def main():
 	args=parser.parse_args()
 
 	now = datetime.today().strftime('%Y-%m-%dT%H:%M:%S')
-	dir_name = os.path.join(
-			"/var/tmp/",
-			args.package_name,
-			now,
-			f"{args.package_name}-{args.version}",
-			)
-	source_dir_name = os.path.join(
-			"/var/tmp/",
-			args.package_name,
-			now,
-			f"{args.package_name}-{args.version}",
-			)
-	Path(dir_name).mkdir(parents=True, exist_ok=True)
-	download_annotation_file(dir_name)
-	info=GetExpID(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
-	# In case there are any failures, the specific ID can be investigated by redefining `info` here.
-	#print(info)
-	#info = [157556400, 311845972]
-	#print(info)
-	download_all_connectivity(info, dir_name=dir_name, resolution=args.resolution)
+	source_dir_name = os.path.join("sourcedata")
+	data_dir_name = os.path.join("data")
+	Path(source_dir_name).mkdir(parents=True, exist_ok=True)
+	download_annotation_file(source_dir_name)
+	if (args.download_only and not args.process_only) or (not args.download_only and not args.process_only):
+		info=get_exp_id(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
+		# In case there are any failures, the specific ID can be investigated by redefining `info` here.
+		print(info)
+		info = info[:3]
+		#info = [157556400, 311845972]
+		print(info)
+		get_sourcedata(info, dir_name=source_dir_name, resolution=args.resolution)
+	elif args.process_only and not args.download_only or (not args.download_only and not args.process_only):
+		process_data(source_dir_name, data_dir=data_dir_name, resolution=args.resolution)
+	else:
+		print("You cannot specify both process-only and download-only.\n If you want both steps to be executed, don't specify either.")
 
 
 if __name__ == "__main__":
