@@ -97,10 +97,9 @@ def nrrd_to_nifti(file,
 	data = data[:,::-1,:]
 	data = data[::-1,:,:] #TODO: Check for Atlas files!!!!!!
 	img = nibabel.Nifti1Image(data,affine_matrix)
-	if not target_dir:
-		nii_path = os.path.join(os.path.dirname(file), os.path.basename(file).split(".")[0] + '.nii')
-	else:
-		nii_path = os.path.join(target_dir, os.path.basename(file).split(".")[0] + '.nii')
+	target_dir = os.path.abspath(os.path.expanduser(target_dir))
+	os.makedirs(target_dir, exist_ok=True)
+	nii_path = os.path.join(target_dir, os.path.basename(file).split(".")[0] + '.nii')
 	nibabel.save(img,nii_path)
 
 	return nii_path
@@ -142,7 +141,8 @@ def get_sourcedata(info, dir_name,
 		path_to_exp = os.path.join(dir_name,str(exp))
 		#TODO: look inside if stuff is there...
 		os.mkdir(path_to_exp)
-		path_to_metadata = get_exp_metadata(exp,path_to_exp) #TODO: so far no coordinate info. Also, avoid downloading twice
+		#TODO: so far no coordinate info. Also, avoid downloading twice
+		path_to_metadata = get_exp_metadata(exp,path_to_exp)
 		struc_name=get_identifying_structure(path_to_metadata)
 		struc_name = struc_name.lower()
 		struc_name= re.sub(" ","_",struc_name)
@@ -165,32 +165,98 @@ def get_sourcedata(info, dir_name,
 	return
 
 
-def process_data(source_dir, data_dir, resolution=100):
-	for nrrd_dir in os.listdir(source_dir):
-		if os.path.isdir(os.path.join(source_dir,nrrd_dir)):
-			nrrd_data = glob.glob(os.path.join(source_dir,nrrd_dir,"*.nrrd"))
-			xml_data = glob.glob(os.path.join(source_dir,nrrd_dir,"*.xml"))
-			target_dir = os.path.join(data_dir, nrrd_dir)
+#def process_data(source_dir, data_dir, scratch_dir="~/.local/share/ABI-connectivity/", resolution=100,):
+def process_data(source_dir, procdata_dir,
+	resolution=100,
+	):
+	for nrrd_dir_name in os.listdir(source_dir):
+		if os.path.isdir(os.path.join(source_dir,nrrd_dir_name)):
+			nrrd_dir = os.path.join(source_dir,nrrd_dir_name)
+			nrrd_data = glob.glob(os.path.join(nrrd_dir,"*.nrrd"))
+			xml_data = glob.glob(os.path.join(nrrd_dir,"*.xml"))
+			if len(nrrd_data) != 1:
+				print(f"One NRRD data file expected in the `{nrrd_dir}` experiment directory, {len(nrrd_data)} found.")
+				raise ValueError
+			else:
+				nrrd_data = nrrd_data[0]
+			if len(xml_data) != 1:
+				print(f"One XML metadata file expected the `{nrrd_dir}` in experiment directory, {len(xml_data)} found.")
+				raise ValueError
+			else:
+				xml_data = xml_data[0]
+
+			target_dir = os.path.join(procdata_dir, nrrd_dir_name)
 			os.makedirs(target_dir, exist_ok=True)
-			nii_data = nrrd_to_nifti(nrrd_data[0], target_dir)
-			file_path_2dsurqec = apply_composite(nii_data,resolution=resolution)
+
+			nii_data = nrrd_to_nifti(nrrd_data, target_dir)
+			file_path_2dsurqec = apply_composite(nii_data, resolution=resolution)
 			os.remove(nii_data)
+			source_xml_path = xml_data
+			target_xml_path = os.path.join(target_dir, os.path.basename(xml_data))
+			shutil.copyfile(source_xml_path, target_xml_path)
 
 
+def bids_rename(procdata_dir, bids_dir):
+	for nii_dir in os.listdir(procdata_dir):
+		if os.path.isdir(os.path.join(procdata_dir,nii_dir)):
+			nii_dir = os.path.join(procdata_dir,nii_dir)
+			nii_data = glob.glob(os.path.join(nii_dir,"*.nii.gz"))
+			xml_data = glob.glob(os.path.join(nii_dir,"*.xml"))
+			if len(nii_data) != 1:
+				print(f"One NIfTI data file expected in the `{nii_dir}` experiment directory, {len(nii_data)} found.")
+				raise ValueError
+			else:
+				nii_data = nii_data[0]
+			if len(xml_data) != 1:
+				print(f"One XML metadata file expected the `{nii_dir}` in experiment directory, {len(xml_data)} found.")
+				raise ValueError
+			else:
+				xml_data = xml_data[0]
 
-def bids_rename(data_file, metadata_file):
-    file_directory = os.path.dirname(data_file)
-    file=open("employee.xml","r")
-    xml_string=file.read()
-	tree = et.parse(metadata_file)
-	root = tree.getroot()
-	struc = root.findall('.//primary-injection-structure/safe-name')[0]
-    print(struct)
-    #print("The XML string is:")
-    #print(xml_string)
-    #python_dict=xmltodict.parse(xml_string)
-    #seed = 
-    #os.rename(data_file, new_name)
+			# Extract metadata:
+			metadata = {}
+			tree = et.parse(xml_data)
+			root = tree.getroot()
+			# Maybe include an explicit list length check
+			metadata['seed'] = {
+				'acronym': root.findall('.//primary-injection-structure/acronym')[0].text,
+				'safe name': root.findall('.//primary-injection-structure/safe-name')[0].text,
+				'injection method': root.findall('.//stereotaxic-injection/injection-method')[0].text,
+				'injection quality': root.findall('.//stereotaxic-injection/injection-quality')[0].text,
+				}
+			metadata['expression'] = {
+				'name': root.findall('.//specimen/name')[0].text,
+				}
+			metadata['id'] = root.findall('.//id')[0].text
+			# !!! Some files don't have Cre selectors listed, why?
+			if not "Cre" in metadata['expression']['name']:
+				continue
+			m = re.match("(?P<expression_acronym>.+?)-(IRES-)?Cre.*",metadata['expression']['name'])
+			if m:
+				metadata['expression'] = {
+					'acronym': m.groupdict()['expression_acronym'],
+					}
+
+			# Create filenames.
+			new_data_dir = os.path.join(
+				bids_dir,
+				f"seed-{metadata['seed']['acronym']}",
+				)
+			new_data_path = os.path.join(
+				new_data_dir,
+				f"seed-{metadata['seed']['acronym']}_expression-{metadata['expression']['acronym']}_FLUO.nii.gz"
+				)
+			new_path_dir = os.path.dirname(new_data_path)
+			new_metadata_path = os.path.join(
+				new_data_dir,
+				f"seed-{metadata['seed']['acronym']}_expression-{metadata['expression']['acronym']}_FLUO.xml"
+				)
+
+			# Write files.
+			os.makedirs(new_path_dir, exist_ok=True)
+			shutil.copyfile(nii_data, new_data_path)
+			with open(new_metadata_path, 'w') as f:
+				json.dump(new_metadata_path, f)
 
 
 def download_all_connectivity(info,dir_name,resolution=[100,25]):
@@ -337,6 +403,7 @@ def main():
 	parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument('--download-only', action='store_true', help='Only download source data.')
 	parser.add_argument('--process-only', action='store_true', help='Only process already present source data.')
+	parser.add_argument('--bids-only', action='store_true', help='Only reformat data to pseudo-BIDS.')
 	parser.add_argument('--version','-v',type=str,default="9999")
 	parser.add_argument('--startRow','-s',type=int,default=0)
 	parser.add_argument('--numRows','-r',type=int,default=2000)
@@ -346,10 +413,11 @@ def main():
 
 	now = datetime.today().strftime('%Y-%m-%dT%H:%M:%S')
 	source_dir_name = os.path.join("sourcedata")
-	data_dir_name = os.path.join("data")
+	procdata_dir_name = os.path.join("procdata")
+	bids_dir_name = os.path.join("bids")
 	Path(source_dir_name).mkdir(parents=True, exist_ok=True)
 	download_annotation_file(source_dir_name)
-	if (args.download_only and not args.process_only) or (not args.download_only and not args.process_only):
+	if (args.download_only and not args.process_only and not args.bids_only) or (not args.download_only and not args.process_only and not args.bids_only):
 		info=get_exp_id(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
 		# In case there are any failures, the specific ID can be investigated by redefining `info` here.
 		print(info)
@@ -357,8 +425,10 @@ def main():
 		#info = [157556400, 311845972]
 		print(info)
 		get_sourcedata(info, dir_name=source_dir_name, resolution=args.resolution)
-	elif args.process_only and not args.download_only or (not args.download_only and not args.process_only):
-		process_data(source_dir_name, data_dir=data_dir_name, resolution=args.resolution)
+	elif args.process_only and not args.download_only and not args.bids_only or (not args.download_only and not args.process_only and not args.bids_only):
+		process_data(source_dir_name, procdata_dir=procdata_dir_name, resolution=args.resolution)
+	elif args.bids_only and not args.download_only and not args.process_only or (not args.download_only and not args.process_only and not args.bids_only):
+		bids_rename(procdata_dir_name, bids_dir_name)
 	else:
 		print("You cannot specify both process-only and download-only.\n If you want both steps to be executed, don't specify either.")
 

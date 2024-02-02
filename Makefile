@@ -33,6 +33,23 @@ else
 	DISTFILE_CACHE_CMD =-v $(DISTFILE_CACHE_PATH):/var/cache/distfiles
 endif
 
+.PHONY: bidsdata
+bidsdata:
+	python code/abi_connectivity.py \
+		--version=${RELEASE_VERSION} \
+		--resolution=${RESOLUTION} \
+		--bids-only
+
+.PHONY: bidsdata-oci
+bidsdata-oci:
+	$(OCI_BINARY) run \
+		-it \
+		--rm \
+		-v ${PWD}:/root/src/ABI-connectivity \
+		--workdir /root/src/ABI-connectivity \
+		${FQDN_IMAGE} \
+		make bidsdata
+
 .PHONY: sourcedata
 sourcedata: clean
 	python code/abi_connectivity.py \
@@ -50,15 +67,15 @@ sourcedata-oci: clean
 		${FQDN_IMAGE} \
 		make sourcedata
 
-.PHONY: processed-data
-processed-data:
+.PHONY: procdata
+procdata:
 	python code/abi_connectivity.py \
 		--version=${RELEASE_VERSION} \
 		--resolution=${RESOLUTION} \
 		--process-only
 
-.PHONY: processed-data-oci
-processed-data-oci:
+.PHONY: procdata-oci
+procdata-oci:
 	$(OCI_BINARY) run \
 		-it \
 		--rm \
