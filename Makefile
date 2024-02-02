@@ -84,6 +84,22 @@ procdata-oci:
 		${FQDN_IMAGE} \
 		make procdata
 
+.PHONY: data
+data:
+	python code/abi_connectivity.py \
+		--version=${RELEASE_VERSION} \
+		--resolution=${RESOLUTION}
+
+.PHONY: data-oci
+data-oci:
+	$(OCI_BINARY) run \
+		-it \
+		--rm \
+		-v ${PWD}:/root/src/ABI-connectivity \
+		--workdir /root/src/ABI-connectivity \
+		${FQDN_IMAGE} \
+		make data
+
 .PHONY: data-oci-interactive
 data-oci-interactive: clean
 	$(OCI_BINARY) run \
