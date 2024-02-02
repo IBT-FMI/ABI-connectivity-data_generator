@@ -82,7 +82,7 @@ procdata-oci:
 		-v ${PWD}:/root/src/ABI-connectivity \
 		--workdir /root/src/ABI-connectivity \
 		${FQDN_IMAGE} \
-		make processed-data
+		make procdata
 
 .PHONY: data-oci-interactive
 data-oci-interactive: clean
