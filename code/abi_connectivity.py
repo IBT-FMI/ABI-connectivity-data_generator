@@ -420,10 +420,10 @@ def main():
 	if (args.download_only and not args.process_only and not args.bids_only) or (not args.download_only and not args.process_only and not args.bids_only):
 		info=get_exp_id(startRow=args.startRow,numRows=args.numRows,totalRows=args.totalRows)
 		# In case there are any failures, the specific ID can be investigated by redefining `info` here.
-		print(info)
-		info = info[:3]
+		#print(info)
+		#info = info[:3]
 		#info = [157556400, 311845972]
-		print(info)
+		#print(info)
 		get_sourcedata(info, dir_name=source_dir_name, resolution=args.resolution)
 	elif args.process_only and not args.download_only and not args.bids_only or (not args.download_only and not args.process_only and not args.bids_only):
 		process_data(source_dir_name, procdata_dir=procdata_dir_name, resolution=args.resolution)
