@@ -1,0 +1,208 @@
+<Response success='true' start_row='0' num_rows='1' total_rows='1'><section-data-sets>
+  <section-data-set>
+    <blue-channel>background fluorescence</blue-channel>
+    <delegate>false</delegate>
+    <expression>false</expression>
+    <failed>false</failed>
+    <failed-facet>734881840</failed-facet>
+    <green-channel>rAAV</green-channel>
+    <id>171021829</id>
+    <name nil="true"/>
+    <plane-of-section-id>1</plane-of-section-id>
+    <qc-date>2012-12-20T23:49:37Z</qc-date>
+    <red-channel>background fluorescence</red-channel>
+    <reference-space-id>9</reference-space-id>
+    <rnaseq-design-id nil="true"/>
+    <section-thickness>100.0</section-thickness>
+    <specimen-id>161993707</specimen-id>
+    <sphinx-id>75443</sphinx-id>
+    <storage-directory>/external/conn/prod519/image_series_171021829/</storage-directory>
+    <weight>5140</weight>
+    <specimen>
+      <cell-prep-sample-id type="integer" nil="true"/>
+      <cell-reporter-id type="integer" nil="true"/>
+      <cortex-layer-id type="integer" nil="true"/>
+      <data nil="true"/>
+      <donor-id type="integer">161993684</donor-id>
+      <ephys-result-id type="integer" nil="true"/>
+      <external-specimen-name>98504</external-specimen-name>
+      <failed-facet type="integer">734881840</failed-facet>
+      <hemisphere nil="true"/>
+      <id type="integer">161993707</id>
+      <is-cell-specimen type="boolean">false</is-cell-specimen>
+      <is-ish type="boolean">false</is-ish>
+      <name>Cck-IRES-Cre-91</name>
+      <parent-id type="integer" nil="true"/>
+      <parent-x-coord type="integer" nil="true"/>
+      <parent-y-coord type="integer" nil="true"/>
+      <parent-z-coord type="integer" nil="true"/>
+      <pinned-radius type="float" nil="true"/>
+      <rna-integrity-number type="float" nil="true"/>
+      <specimen-id-path>/161993707/</specimen-id-path>
+      <sphinx-id type="integer">14018</sphinx-id>
+      <structure-id type="integer" nil="true"/>
+      <tissue-ph type="float" nil="true"/>
+      <treatment-id type="integer" nil="true"/>
+      <weight type="integer">9000</weight>
+      <stereotaxic-injections type="array">
+        <stereotaxic-injection>
+          <age-id type="integer">15</age-id>
+          <days-post-injection type="integer">21</days-post-injection>
+          <id type="integer">161993909</id>
+          <injection-method>Iontophoresis</injection-method>
+          <injection-quality>1</injection-quality>
+          <primary-injection-structure-id type="integer">749</primary-injection-structure-id>
+          <specimen-id type="integer">161993707</specimen-id>
+          <sphinx-id type="integer">1024</sphinx-id>
+          <targeted-injection-structure-id type="integer">749</targeted-injection-structure-id>
+          <primary-injection-structure type="Structure">
+            <acronym>VTA</acronym>
+            <atlas-id type="integer">376</atlas-id>
+            <color-hex-triplet>FF90FF</color-hex-triplet>
+            <depth type="integer">5</depth>
+            <failed type="boolean">false</failed>
+            <failed-facet type="integer">734881840</failed-facet>
+            <graph-id type="integer">1</graph-id>
+            <graph-order type="integer">823</graph-order>
+            <hemisphere-id type="integer">3</hemisphere-id>
+            <id type="integer">749</id>
+            <name>Ventral tegmental area</name>
+            <neuro-name-structure-id type="integer" nil="true"/>
+            <neuro-name-structure-id-path nil="true"/>
+            <ontology-id type="integer">1</ontology-id>
+            <parent-structure-id type="integer">323</parent-structure-id>
+            <safe-name>Ventral tegmental area</safe-name>
+            <sphinx-id type="integer">824</sphinx-id>
+            <st-level type="integer">8</st-level>
+            <structure-id-path>/997/8/343/313/323/749/</structure-id-path>
+            <structure-name-facet type="integer">393100752</structure-name-facet>
+            <weight type="integer">8690</weight>
+          </primary-injection-structure>
+          <structures type="array">
+            <structure>
+              <acronym>VTA</acronym>
+              <ar-association-key-name type="NilClass">161993909</ar-association-key-name>
+              <atlas-id type="integer">376</atlas-id>
+              <color-hex-triplet>FF90FF</color-hex-triplet>
+              <depth type="integer">5</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">823</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">749</id>
+              <name>Ventral tegmental area</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">323</parent-structure-id>
+              <safe-name>Ventral tegmental area</safe-name>
+              <sphinx-id type="integer">824</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/313/323/749/</structure-id-path>
+              <structure-name-facet type="integer">393100752</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>IF</acronym>
+              <ar-association-key-name type="NilClass">161993909</ar-association-key-name>
+              <atlas-id type="integer">142</atlas-id>
+              <color-hex-triplet>FFA6FF</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">869</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">12</id>
+              <name>Interfascicular nucleus raphe</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">165</parent-structure-id>
+              <safe-name>Interfascicular nucleus raphe</safe-name>
+              <sphinx-id type="integer">870</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/313/348/165/12/</structure-id-path>
+              <structure-name-facet type="integer">1057138099</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>CLI</acronym>
+              <ar-association-key-name type="NilClass">161993909</ar-association-key-name>
+              <atlas-id type="integer">73</atlas-id>
+              <color-hex-triplet>FFA6FF</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">880</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">591</id>
+              <name>Central linear nucleus raphe</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">165</parent-structure-id>
+              <safe-name>Central linear nucleus raphe</safe-name>
+              <sphinx-id type="integer">881</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/313/348/165/591/</structure-id-path>
+              <structure-name-facet type="integer">3351344971</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>RR</acronym>
+              <ar-association-key-name type="NilClass">161993909</ar-association-key-name>
+              <atlas-id type="integer">313</atlas-id>
+              <color-hex-triplet>FF90FF</color-hex-triplet>
+              <depth type="integer">5</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">825</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">246</id>
+              <name>Midbrain reticular nucleus, retrorubral area</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">323</parent-structure-id>
+              <safe-name>Midbrain reticular nucleus retrorubral area</safe-name>
+              <sphinx-id type="integer">826</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/313/323/246/</structure-id-path>
+              <structure-name-facet type="integer">2206996677</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>MRN</acronym>
+              <ar-association-key-name type="NilClass">161993909</ar-association-key-name>
+              <atlas-id type="integer">864</atlas-id>
+              <color-hex-triplet>FF90FF</color-hex-triplet>
+              <depth type="integer">5</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">826</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">128</id>
+              <name>Midbrain reticular nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">323</parent-structure-id>
+              <safe-name>Midbrain reticular nucleus</safe-name>
+              <sphinx-id type="integer">827</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/313/323/128/</structure-id-path>
+              <structure-name-facet type="integer">2371196921</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+          </structures>
+        </stereotaxic-injection>
+      </stereotaxic-injections>
+    </specimen>
+  </section-data-set>
+</section-data-sets>
+</Response>

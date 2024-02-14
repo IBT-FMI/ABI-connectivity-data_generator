@@ -1,0 +1,184 @@
+<Response success='true' start_row='0' num_rows='1' total_rows='1'><section-data-sets>
+  <section-data-set>
+    <blue-channel>background fluorescence</blue-channel>
+    <delegate>false</delegate>
+    <expression>false</expression>
+    <failed>false</failed>
+    <failed-facet>734881840</failed-facet>
+    <green-channel>rAAV</green-channel>
+    <id>297713365</id>
+    <name nil="true"/>
+    <plane-of-section-id>1</plane-of-section-id>
+    <qc-date>2014-02-03T21:27:16Z</qc-date>
+    <red-channel>background fluorescence</red-channel>
+    <reference-space-id>9</reference-space-id>
+    <rnaseq-design-id nil="true"/>
+    <section-thickness>100.0</section-thickness>
+    <specimen-id>292534773</specimen-id>
+    <sphinx-id>72625</sphinx-id>
+    <storage-directory>/external/conn/prod714/image_series_297713365/</storage-directory>
+    <weight>5140</weight>
+    <specimen>
+      <cell-prep-sample-id type="integer" nil="true"/>
+      <cell-reporter-id type="integer" nil="true"/>
+      <cortex-layer-id type="integer" nil="true"/>
+      <data nil="true"/>
+      <donor-id type="integer">292534766</donor-id>
+      <ephys-result-id type="integer" nil="true"/>
+      <external-specimen-name>125424</external-specimen-name>
+      <failed-facet type="integer">734881840</failed-facet>
+      <hemisphere nil="true"/>
+      <id type="integer">292534773</id>
+      <is-cell-specimen type="boolean">false</is-cell-specimen>
+      <is-ish type="boolean">false</is-ish>
+      <name>Sim1-Cre_KJ18-125424</name>
+      <parent-id type="integer" nil="true"/>
+      <parent-x-coord type="integer" nil="true"/>
+      <parent-y-coord type="integer" nil="true"/>
+      <parent-z-coord type="integer" nil="true"/>
+      <pinned-radius type="float" nil="true"/>
+      <rna-integrity-number type="float" nil="true"/>
+      <specimen-id-path>/292534773/</specimen-id-path>
+      <sphinx-id type="integer">15032</sphinx-id>
+      <structure-id type="integer" nil="true"/>
+      <tissue-ph type="float" nil="true"/>
+      <treatment-id type="integer" nil="true"/>
+      <weight type="integer">9000</weight>
+      <stereotaxic-injections type="array">
+        <stereotaxic-injection>
+          <age-id type="integer">15</age-id>
+          <days-post-injection type="integer">21</days-post-injection>
+          <id type="integer">292534843</id>
+          <injection-method>Iontophoresis</injection-method>
+          <injection-quality>1</injection-quality>
+          <primary-injection-structure-id type="integer">353</primary-injection-structure-id>
+          <specimen-id type="integer">292534773</specimen-id>
+          <sphinx-id type="integer">7402</sphinx-id>
+          <targeted-injection-structure-id type="integer">378</targeted-injection-structure-id>
+          <primary-injection-structure type="Structure">
+            <acronym>SSp-n</acronym>
+            <atlas-id type="integer">751</atlas-id>
+            <color-hex-triplet>188064</color-hex-triplet>
+            <depth type="integer">8</depth>
+            <failed type="boolean">false</failed>
+            <failed-facet type="integer">734881840</failed-facet>
+            <graph-id type="integer">1</graph-id>
+            <graph-order type="integer">44</graph-order>
+            <hemisphere-id type="integer">3</hemisphere-id>
+            <id type="integer">353</id>
+            <name>Primary somatosensory area, nose</name>
+            <neuro-name-structure-id type="integer" nil="true"/>
+            <neuro-name-structure-id-path nil="true"/>
+            <ontology-id type="integer">1</ontology-id>
+            <parent-structure-id type="integer">322</parent-structure-id>
+            <safe-name>Primary somatosensory area nose</safe-name>
+            <sphinx-id type="integer">45</sphinx-id>
+            <st-level type="integer">9</st-level>
+            <structure-id-path>/997/8/567/688/695/315/453/322/353/</structure-id-path>
+            <structure-name-facet type="integer">3014838097</structure-name-facet>
+            <weight type="integer">8690</weight>
+          </primary-injection-structure>
+          <structures type="array">
+            <structure>
+              <acronym>SSp-n</acronym>
+              <ar-association-key-name type="NilClass">292534843</ar-association-key-name>
+              <atlas-id type="integer">751</atlas-id>
+              <color-hex-triplet>188064</color-hex-triplet>
+              <depth type="integer">8</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">44</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">353</id>
+              <name>Primary somatosensory area, nose</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">322</parent-structure-id>
+              <safe-name>Primary somatosensory area nose</safe-name>
+              <sphinx-id type="integer">45</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/567/688/695/315/453/322/353/</structure-id-path>
+              <structure-name-facet type="integer">3014838097</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>SSs</acronym>
+              <ar-association-key-name type="NilClass">292534843</ar-association-key-name>
+              <atlas-id type="integer">754</atlas-id>
+              <color-hex-triplet>188064</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">100</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">378</id>
+              <name>Supplemental somatosensory area</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">453</parent-structure-id>
+              <safe-name>Supplemental somatosensory area</safe-name>
+              <sphinx-id type="integer">101</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/567/688/695/315/453/378/</structure-id-path>
+              <structure-name-facet type="integer">713142416</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>SSp-bfd</acronym>
+              <ar-association-key-name type="NilClass">292534843</ar-association-key-name>
+              <atlas-id type="integer">748</atlas-id>
+              <color-hex-triplet>188064</color-hex-triplet>
+              <depth type="integer">8</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">51</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">329</id>
+              <name>Primary somatosensory area, barrel field</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">322</parent-structure-id>
+              <safe-name>Primary somatosensory area barrel field</safe-name>
+              <sphinx-id type="integer">52</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/567/688/695/315/453/322/329/</structure-id-path>
+              <structure-name-facet type="integer">3406319794</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>SSp-un</acronym>
+              <ar-association-key-name type="NilClass">292534843</ar-association-key-name>
+              <atlas-id type="integer" nil="true"/>
+              <color-hex-triplet>188064</color-hex-triplet>
+              <depth type="integer">8</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">93</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">182305689</id>
+              <name>Primary somatosensory area, unassigned</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">322</parent-structure-id>
+              <safe-name>Primary somatosensory area unassigned</safe-name>
+              <sphinx-id type="integer">94</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/567/688/695/315/453/322/182305689/</structure-id-path>
+              <structure-name-facet type="integer">10092796</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+          </structures>
+        </stereotaxic-injection>
+      </stereotaxic-injections>
+    </specimen>
+  </section-data-set>
+</section-data-sets>
+</Response>
