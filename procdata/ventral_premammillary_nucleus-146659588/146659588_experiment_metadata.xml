@@ -1,0 +1,424 @@
+<Response success='true' start_row='0' num_rows='1' total_rows='1'><section-data-sets>
+  <section-data-set>
+    <blue-channel>background fluorescence</blue-channel>
+    <delegate>false</delegate>
+    <expression>false</expression>
+    <failed>false</failed>
+    <failed-facet>734881840</failed-facet>
+    <green-channel>rAAV</green-channel>
+    <id>146659588</id>
+    <name nil="true"/>
+    <plane-of-section-id>1</plane-of-section-id>
+    <qc-date>2012-11-26T23:23:54Z</qc-date>
+    <red-channel>background fluorescence</red-channel>
+    <reference-space-id>9</reference-space-id>
+    <rnaseq-design-id nil="true"/>
+    <section-thickness>100.0</section-thickness>
+    <specimen-id>119962214</specimen-id>
+    <sphinx-id>32186</sphinx-id>
+    <storage-directory>/external/conn/prod438/image_series_146659588/</storage-directory>
+    <weight>5140</weight>
+    <specimen>
+      <cell-prep-sample-id type="integer" nil="true"/>
+      <cell-reporter-id type="integer" nil="true"/>
+      <cortex-layer-id type="integer" nil="true"/>
+      <data nil="true"/>
+      <donor-id type="integer">119962206</donor-id>
+      <ephys-result-id type="integer" nil="true"/>
+      <external-specimen-name>90757</external-specimen-name>
+      <failed-facet type="integer">734881840</failed-facet>
+      <hemisphere nil="true"/>
+      <id type="integer">119962214</id>
+      <is-cell-specimen type="boolean">false</is-cell-specimen>
+      <is-ish type="boolean">false</is-ish>
+      <name>378-1485</name>
+      <parent-id type="integer" nil="true"/>
+      <parent-x-coord type="integer" nil="true"/>
+      <parent-y-coord type="integer" nil="true"/>
+      <parent-z-coord type="integer" nil="true"/>
+      <pinned-radius type="float" nil="true"/>
+      <rna-integrity-number type="float" nil="true"/>
+      <specimen-id-path>/119962214/</specimen-id-path>
+      <sphinx-id type="integer">13840</sphinx-id>
+      <structure-id type="integer" nil="true"/>
+      <tissue-ph type="float" nil="true"/>
+      <treatment-id type="integer" nil="true"/>
+      <weight type="integer">9000</weight>
+      <stereotaxic-injections type="array">
+        <stereotaxic-injection>
+          <age-id type="integer">15</age-id>
+          <days-post-injection type="integer">21</days-post-injection>
+          <id type="integer">119962240</id>
+          <injection-method>Iontophoresis</injection-method>
+          <injection-quality>1</injection-quality>
+          <primary-injection-structure-id type="integer">1004</primary-injection-structure-id>
+          <specimen-id type="integer">119962214</specimen-id>
+          <sphinx-id type="integer">3365</sphinx-id>
+          <targeted-injection-structure-id type="integer">693</targeted-injection-structure-id>
+          <primary-injection-structure type="Structure">
+            <acronym>PMv</acronym>
+            <atlas-id type="integer">266</atlas-id>
+            <color-hex-triplet>FF4C3E</color-hex-triplet>
+            <depth type="integer">6</depth>
+            <failed type="boolean">false</failed>
+            <failed-facet type="integer">734881840</failed-facet>
+            <graph-id type="integer">1</graph-id>
+            <graph-order type="integer">781</graph-order>
+            <hemisphere-id type="integer">3</hemisphere-id>
+            <id type="integer">1004</id>
+            <name>Ventral premammillary nucleus</name>
+            <neuro-name-structure-id type="integer" nil="true"/>
+            <neuro-name-structure-id-path nil="true"/>
+            <ontology-id type="integer">1</ontology-id>
+            <parent-structure-id type="integer">467</parent-structure-id>
+            <safe-name>Ventral premammillary nucleus</safe-name>
+            <sphinx-id type="integer">782</sphinx-id>
+            <st-level type="integer">8</st-level>
+            <structure-id-path>/997/8/343/1129/1097/467/1004/</structure-id-path>
+            <structure-name-facet type="integer">959948768</structure-name-facet>
+            <weight type="integer">8690</weight>
+          </primary-injection-structure>
+          <structures type="array">
+            <structure>
+              <acronym>PMv</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">266</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">781</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">1004</id>
+              <name>Ventral premammillary nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">467</parent-structure-id>
+              <safe-name>Ventral premammillary nucleus</safe-name>
+              <sphinx-id type="integer">782</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/1004/</structure-id-path>
+              <structure-name-facet type="integer">959948768</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>PH</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">259</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">792</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">946</id>
+              <name>Posterior hypothalamic nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">467</parent-structure-id>
+              <safe-name>Posterior hypothalamic nucleus</safe-name>
+              <sphinx-id type="integer">793</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/946/</structure-id-path>
+              <structure-name-facet type="integer">303854195</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>PMd</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">263</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">780</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">980</id>
+              <name>Dorsal premammillary nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">467</parent-structure-id>
+              <safe-name>Dorsal premammillary nucleus</safe-name>
+              <sphinx-id type="integer">781</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/980/</structure-id-path>
+              <structure-name-facet type="integer">282623527</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>PVp</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">298</atlas-id>
+              <color-hex-triplet>FF5547</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">749</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">126</id>
+              <name>Periventricular hypothalamic nucleus, posterior part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">141</parent-structure-id>
+              <safe-name>Periventricular hypothalamic nucleus posterior part</safe-name>
+              <sphinx-id type="integer">750</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/141/126/</structure-id-path>
+              <structure-name-facet type="integer">4039829223</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>SUM</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">348</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">770</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">525</id>
+              <name>Supramammillary nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">331</parent-structure-id>
+              <safe-name>Supramammillary nucleus</safe-name>
+              <sphinx-id type="integer">771</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/331/525/</structure-id-path>
+              <structure-name-facet type="integer">4172534656</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>TMd</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">423</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">8</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">774</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">1126</id>
+              <name>Tuberomammillary nucleus, dorsal part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">557</parent-structure-id>
+              <safe-name>Tuberomammillary nucleus dorsal part</safe-name>
+              <sphinx-id type="integer">775</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/331/557/1126/</structure-id-path>
+              <structure-name-facet type="integer">2136571968</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>SPFm</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">334</atlas-id>
+              <color-hex-triplet>FF8084</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">653</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">414</id>
+              <name>Subparafascicular nucleus, magnocellular part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">406</parent-structure-id>
+              <safe-name>Subparafascicular nucleus magnocellular part</safe-name>
+              <sphinx-id type="integer">654</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/343/1129/549/864/406/414/</structure-id-path>
+              <structure-name-facet type="integer">1493863119</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>DMH</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">103</atlas-id>
+              <color-hex-triplet>FF5547</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">739</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">830</id>
+              <name>Dorsomedial nucleus of the hypothalamus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">141</parent-structure-id>
+              <safe-name>Dorsomedial nucleus of the hypothalamus</safe-name>
+              <sphinx-id type="integer">740</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/141/830/</structure-id-path>
+              <structure-name-facet type="integer">761673421</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>TMv</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">424</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">8</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">775</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">1</id>
+              <name>Tuberomammillary nucleus, ventral part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">557</parent-structure-id>
+              <safe-name>Tuberomammillary nucleus ventral part</safe-name>
+              <sphinx-id type="integer">776</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/331/557/1/</structure-id-path>
+              <structure-name-facet type="integer">3678649713</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>MM</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">202</atlas-id>
+              <color-hex-triplet>FF4C3E</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">764</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">491</id>
+              <name>Medial mammillary nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">331</parent-structure-id>
+              <safe-name>Medial mammillary nucleus</safe-name>
+              <sphinx-id type="integer">765</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/467/331/491/</structure-id-path>
+              <structure-name-facet type="integer">338961468</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>ARH</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">27</atlas-id>
+              <color-hex-triplet>FF5D50</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">733</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">223</id>
+              <name>Arcuate hypothalamic nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">157</parent-structure-id>
+              <safe-name>Arcuate hypothalamic nucleus</safe-name>
+              <sphinx-id type="integer">734</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/157/223/</structure-id-path>
+              <structure-name-facet type="integer">218062747</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>LHA</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">165</atlas-id>
+              <color-hex-triplet>F2483B</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">794</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">194</id>
+              <name>Lateral hypothalamic area</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">290</parent-structure-id>
+              <safe-name>Lateral hypothalamic area</safe-name>
+              <sphinx-id type="integer">795</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/1097/290/194/</structure-id-path>
+              <structure-name-facet type="integer">1636673296</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>VPMpc</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">375</atlas-id>
+              <color-hex-triplet>FF8084</color-hex-triplet>
+              <depth type="integer">8</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">650</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">741</id>
+              <name>Ventral posteromedial nucleus of the thalamus, parvicellular part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">709</parent-structure-id>
+              <safe-name>Ventral posteromedial nucleus of the thalamus parvicellular part</safe-name>
+              <sphinx-id type="integer">651</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/343/1129/549/864/637/709/741/</structure-id-path>
+              <structure-name-facet type="integer">2993275992</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>PF</acronym>
+              <ar-association-key-name type="NilClass">119962240</ar-association-key-name>
+              <atlas-id type="integer">257</atlas-id>
+              <color-hex-triplet>FF909F</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">701</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">930</id>
+              <name>Parafascicular nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">51</parent-structure-id>
+              <safe-name>Parafascicular nucleus</safe-name>
+              <sphinx-id type="integer">702</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/549/856/51/930/</structure-id-path>
+              <structure-name-facet type="integer">2732022867</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+          </structures>
+        </stereotaxic-injection>
+      </stereotaxic-injections>
+    </specimen>
+  </section-data-set>
+</section-data-sets>
+</Response>

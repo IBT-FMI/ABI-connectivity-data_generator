@@ -1,0 +1,136 @@
+<Response success='true' start_row='0' num_rows='1' total_rows='1'><section-data-sets>
+  <section-data-set>
+    <blue-channel>background fluorescence</blue-channel>
+    <delegate>false</delegate>
+    <expression>false</expression>
+    <failed>false</failed>
+    <failed-facet>734881840</failed-facet>
+    <green-channel>rAAV</green-channel>
+    <id>299996344</id>
+    <name nil="true"/>
+    <plane-of-section-id>1</plane-of-section-id>
+    <qc-date>2014-03-17T20:06:01Z</qc-date>
+    <red-channel>background fluorescence</red-channel>
+    <reference-space-id>9</reference-space-id>
+    <rnaseq-design-id nil="true"/>
+    <section-thickness>100.0</section-thickness>
+    <specimen-id>287654378</specimen-id>
+    <sphinx-id>1016</sphinx-id>
+    <storage-directory>/external/conn/prod734/image_series_299996344/</storage-directory>
+    <weight>5140</weight>
+    <specimen>
+      <cell-prep-sample-id type="integer" nil="true"/>
+      <cell-reporter-id type="integer" nil="true"/>
+      <cortex-layer-id type="integer" nil="true"/>
+      <data nil="true"/>
+      <donor-id type="integer">287654372</donor-id>
+      <ephys-result-id type="integer" nil="true"/>
+      <external-specimen-name>122689</external-specimen-name>
+      <failed-facet type="integer">734881840</failed-facet>
+      <hemisphere nil="true"/>
+      <id type="integer">287654378</id>
+      <is-cell-specimen type="boolean">false</is-cell-specimen>
+      <is-ish type="boolean">false</is-ish>
+      <name>Calb2-IRES-Cre-122689</name>
+      <parent-id type="integer" nil="true"/>
+      <parent-x-coord type="integer" nil="true"/>
+      <parent-y-coord type="integer" nil="true"/>
+      <parent-z-coord type="integer" nil="true"/>
+      <pinned-radius type="float" nil="true"/>
+      <rna-integrity-number type="float" nil="true"/>
+      <specimen-id-path>/287654378/</specimen-id-path>
+      <sphinx-id type="integer">9340</sphinx-id>
+      <structure-id type="integer" nil="true"/>
+      <tissue-ph type="float" nil="true"/>
+      <treatment-id type="integer" nil="true"/>
+      <weight type="integer">9000</weight>
+      <stereotaxic-injections type="array">
+        <stereotaxic-injection>
+          <age-id type="integer">15</age-id>
+          <days-post-injection type="integer">21</days-post-injection>
+          <id type="integer">287654381</id>
+          <injection-method>Iontophoresis</injection-method>
+          <injection-quality>3</injection-quality>
+          <primary-injection-structure-id type="integer">475</primary-injection-structure-id>
+          <specimen-id type="integer">287654378</specimen-id>
+          <sphinx-id type="integer">762</sphinx-id>
+          <targeted-injection-structure-id type="integer">726</targeted-injection-structure-id>
+          <primary-injection-structure type="Structure">
+            <acronym>MG</acronym>
+            <atlas-id type="integer">200</atlas-id>
+            <color-hex-triplet>FF8084</color-hex-triplet>
+            <depth type="integer">7</depth>
+            <failed type="boolean">false</failed>
+            <failed-facet type="integer">734881840</failed-facet>
+            <graph-id type="integer">1</graph-id>
+            <graph-order type="integer">658</graph-order>
+            <hemisphere-id type="integer">3</hemisphere-id>
+            <id type="integer">475</id>
+            <name>Medial geniculate complex</name>
+            <neuro-name-structure-id type="integer" nil="true"/>
+            <neuro-name-structure-id-path nil="true"/>
+            <ontology-id type="integer">1</ontology-id>
+            <parent-structure-id type="integer">1008</parent-structure-id>
+            <safe-name>Medial geniculate complex</safe-name>
+            <sphinx-id type="integer">659</sphinx-id>
+            <st-level type="integer">8</st-level>
+            <structure-id-path>/997/8/343/1129/549/864/1008/475/</structure-id-path>
+            <structure-name-facet type="integer">3303425611</structure-name-facet>
+            <weight type="integer">8690</weight>
+          </primary-injection-structure>
+          <structures type="array">
+            <structure>
+              <acronym>MG</acronym>
+              <ar-association-key-name type="NilClass">287654381</ar-association-key-name>
+              <atlas-id type="integer">200</atlas-id>
+              <color-hex-triplet>FF8084</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">658</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">475</id>
+              <name>Medial geniculate complex</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">1008</parent-structure-id>
+              <safe-name>Medial geniculate complex</safe-name>
+              <sphinx-id type="integer">659</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/549/864/1008/475/</structure-id-path>
+              <structure-name-facet type="integer">3303425611</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>SGN</acronym>
+              <ar-association-key-name type="NilClass">287654381</ar-association-key-name>
+              <atlas-id type="integer">323</atlas-id>
+              <color-hex-triplet>FF909F</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">671</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">325</id>
+              <name>Suprageniculate nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">138</parent-structure-id>
+              <safe-name>Suprageniculate nucleus</safe-name>
+              <sphinx-id type="integer">672</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/343/1129/549/856/138/325/</structure-id-path>
+              <structure-name-facet type="integer">2630178778</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+          </structures>
+        </stereotaxic-injection>
+      </stereotaxic-injections>
+    </specimen>
+  </section-data-set>
+</section-data-sets>
+</Response>

@@ -1,4 +1,5 @@
 import argparse
+import time
 import copy
 import json
 import os
@@ -152,17 +153,38 @@ def get_sourcedata(info, dir_name,
 		os.rename(path_to_exp,new_path)
 		resolution_url = "?image=projection_density&resolution=" + str(resolution)
 		url = download_url + str(exp) + resolution_url
-		print(url)
-		fh = urllib.request.urlretrieve(url)
+		# Trying higher timout to avoid spontaneous drop, unit is seconds
+		# Last failed at:
+		# http://api.brain-map.org/grid_data/download_file/165975096?image=projection_density&resolution=100
+		fh = download_with_retry(url)
 		filename = str.split((fh[1]._headers[6][1]),'filename=')[1] #TODO: Consistent??
 		#TODO: do that differenttly ...
 		filename = str.split(filename,";")[0]
 		file_path_nrrd = os.path.join(new_path,filename)
 		shutil.copy(fh[0],file_path_nrrd)
 		os.remove(fh[0])
-		#os.rename(fh[0],file_path_nrrd) only works if source and dest are on the same filesystem
 
 	return
+
+
+def download_with_retry(url, max_retries=5, timeout=5):
+	retries = 0
+	print(f"Trying to download {url}.")
+ 
+	while retries < max_retries:
+		try:
+			fh = urllib.request.urlretrieve(url)
+			print(f"\t✔️ downloaded.")
+			return fh
+		#except urllib.error.URLError as e:
+		except:
+			#if isinstance(e.reason, TimeoutError):
+			print(f"\ttimeout occurred, retrying ({retries + 1}/{max_retries})...")
+			retries += 1
+			time.sleep(timeout)  # Wait for a moment before retrying
+			#else:
+			#	raise
+	print(f"\t❌download failed after {max_retries} retries.")
 
 
 #def process_data(source_dir, data_dir, scratch_dir="~/.local/share/ABI-connectivity/", resolution=100,):
@@ -233,9 +255,12 @@ def bids_rename(procdata_dir, bids_dir):
 				continue
 			m = re.match("(?P<expression_acronym>.+?)-(IRES-)?Cre.*",metadata['expression']['name'])
 			if m:
+				expression_acronym = m.groupdict()['expression_acronym'].replace("-", "")
 				metadata['expression'] = {
-					'acronym': m.groupdict()['expression_acronym'],
+					'acronym': expression_acronym,
 					}
+			else:
+				continue
 
 			# Create filenames.
 			new_data_dir = os.path.join(
@@ -249,14 +274,14 @@ def bids_rename(procdata_dir, bids_dir):
 			new_path_dir = os.path.dirname(new_data_path)
 			new_metadata_path = os.path.join(
 				new_data_dir,
-				f"seed-{metadata['seed']['acronym']}_expression-{metadata['expression']['acronym']}_FLUO.xml"
+				f"seed-{metadata['seed']['acronym']}_expression-{metadata['expression']['acronym']}_FLUO.json"
 				)
 
 			# Write files.
 			os.makedirs(new_path_dir, exist_ok=True)
 			shutil.copyfile(nii_data, new_data_path)
 			with open(new_metadata_path, 'w') as f:
-				json.dump(new_metadata_path, f)
+				json.dump(metadata, f)
 
 
 def download_all_connectivity(info,dir_name,resolution=[100,25]):
@@ -399,7 +424,6 @@ def save_info(info,dir_name):
 
 def main():
 	#TODO: some sort of parallel download should be possible, stating totalrows and startrows differently for simultaneous download
-	#TODO: timeout for urllib
 	parser = argparse.ArgumentParser(description="Similarity",formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument('--download-only', action='store_true', help='Only download source data.')
 	parser.add_argument('--process-only', action='store_true', help='Only process already present source data.')
@@ -425,12 +449,10 @@ def main():
 		#info = [157556400, 311845972]
 		#print(info)
 		get_sourcedata(info, dir_name=source_dir_name, resolution=args.resolution)
-	elif args.process_only and not args.download_only and not args.bids_only or (not args.download_only and not args.process_only and not args.bids_only):
+	if args.process_only and not args.download_only and not args.bids_only or (not args.download_only and not args.process_only and not args.bids_only):
 		process_data(source_dir_name, procdata_dir=procdata_dir_name, resolution=args.resolution)
-	elif args.bids_only and not args.download_only and not args.process_only or (not args.download_only and not args.process_only and not args.bids_only):
+	if args.bids_only and not args.download_only and not args.process_only or (not args.download_only and not args.process_only and not args.bids_only):
 		bids_rename(procdata_dir_name, bids_dir_name)
-	else:
-		print("You cannot specify both process-only and download-only.\n If you want both steps to be executed, don't specify either.")
 
 
 if __name__ == "__main__":

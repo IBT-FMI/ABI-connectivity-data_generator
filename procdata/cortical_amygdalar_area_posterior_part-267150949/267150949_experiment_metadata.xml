@@ -1,0 +1,232 @@
+<Response success='true' start_row='0' num_rows='1' total_rows='1'><section-data-sets>
+  <section-data-set>
+    <blue-channel>background fluorescence</blue-channel>
+    <delegate>false</delegate>
+    <expression>false</expression>
+    <failed>false</failed>
+    <failed-facet>734881840</failed-facet>
+    <green-channel>rAAV</green-channel>
+    <id>267150949</id>
+    <name nil="true"/>
+    <plane-of-section-id>1</plane-of-section-id>
+    <qc-date>2013-07-18T20:47:09Z</qc-date>
+    <red-channel>background fluorescence</red-channel>
+    <reference-space-id>9</reference-space-id>
+    <rnaseq-design-id nil="true"/>
+    <section-thickness>100.0</section-thickness>
+    <specimen-id>265656313</specimen-id>
+    <sphinx-id>110913</sphinx-id>
+    <storage-directory>/external/conn/prod612/image_series_267150949/</storage-directory>
+    <weight>5140</weight>
+    <specimen>
+      <cell-prep-sample-id type="integer" nil="true"/>
+      <cell-reporter-id type="integer" nil="true"/>
+      <cortex-layer-id type="integer" nil="true"/>
+      <data nil="true"/>
+      <donor-id type="integer">265656027</donor-id>
+      <ephys-result-id type="integer" nil="true"/>
+      <external-specimen-name>112739</external-specimen-name>
+      <failed-facet type="integer">734881840</failed-facet>
+      <hemisphere nil="true"/>
+      <id type="integer">265656313</id>
+      <is-cell-specimen type="boolean">false</is-cell-specimen>
+      <is-ish type="boolean">false</is-ish>
+      <name>Slc17a7-IRES2-Cre-D-645</name>
+      <parent-id type="integer" nil="true"/>
+      <parent-x-coord type="integer" nil="true"/>
+      <parent-y-coord type="integer" nil="true"/>
+      <parent-z-coord type="integer" nil="true"/>
+      <pinned-radius type="float" nil="true"/>
+      <rna-integrity-number type="float" nil="true"/>
+      <specimen-id-path>/265656313/</specimen-id-path>
+      <sphinx-id type="integer">14434</sphinx-id>
+      <structure-id type="integer" nil="true"/>
+      <tissue-ph type="float" nil="true"/>
+      <treatment-id type="integer" nil="true"/>
+      <weight type="integer">9000</weight>
+      <stereotaxic-injections type="array">
+        <stereotaxic-injection>
+          <age-id type="integer">15</age-id>
+          <days-post-injection type="integer">21</days-post-injection>
+          <id type="integer">265656991</id>
+          <injection-method>Iontophoresis</injection-method>
+          <injection-quality>1</injection-quality>
+          <primary-injection-structure-id type="integer">647</primary-injection-structure-id>
+          <specimen-id type="integer">265656313</specimen-id>
+          <sphinx-id type="integer">9491</sphinx-id>
+          <targeted-injection-structure-id type="integer">655</targeted-injection-structure-id>
+          <primary-injection-structure type="Structure">
+            <acronym>COAp</acronym>
+            <atlas-id type="integer">80</atlas-id>
+            <color-hex-triplet>61E7B7</color-hex-triplet>
+            <depth type="integer">7</depth>
+            <failed type="boolean">false</failed>
+            <failed-facet type="integer">734881840</failed-facet>
+            <graph-id type="integer">1</graph-id>
+            <graph-order type="integer">431</graph-order>
+            <hemisphere-id type="integer">3</hemisphere-id>
+            <id type="integer">647</id>
+            <name>Cortical amygdalar area, posterior part</name>
+            <neuro-name-structure-id type="integer" nil="true"/>
+            <neuro-name-structure-id-path nil="true"/>
+            <ontology-id type="integer">1</ontology-id>
+            <parent-structure-id type="integer">631</parent-structure-id>
+            <safe-name>Cortical amygdalar area posterior part</safe-name>
+            <sphinx-id type="integer">432</sphinx-id>
+            <st-level type="integer">9</st-level>
+            <structure-id-path>/997/8/567/688/695/698/631/647/</structure-id-path>
+            <structure-name-facet type="integer">713144098</structure-name-facet>
+            <weight type="integer">8690</weight>
+          </primary-injection-structure>
+          <structures type="array">
+            <structure>
+              <acronym>COAp</acronym>
+              <ar-association-key-name type="NilClass">265656991</ar-association-key-name>
+              <atlas-id type="integer">80</atlas-id>
+              <color-hex-triplet>61E7B7</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">431</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">647</id>
+              <name>Cortical amygdalar area, posterior part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">631</parent-structure-id>
+              <safe-name>Cortical amygdalar area posterior part</safe-name>
+              <sphinx-id type="integer">432</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/567/688/695/698/631/647/</structure-id-path>
+              <structure-name-facet type="integer">713144098</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>BMA</acronym>
+              <ar-association-key-name type="NilClass">265656991</ar-association-key-name>
+              <atlas-id type="integer">39</atlas-id>
+              <color-hex-triplet>84EA81</color-hex-triplet>
+              <depth type="integer">5</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">566</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">319</id>
+              <name>Basomedial amygdalar nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">703</parent-structure-id>
+              <safe-name>Basomedial amygdalar nucleus</safe-name>
+              <sphinx-id type="integer">567</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/567/688/703/319/</structure-id-path>
+              <structure-name-facet type="integer">3634024678</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>PA</acronym>
+              <ar-association-key-name type="NilClass">265656991</ar-association-key-name>
+              <atlas-id type="integer">238</atlas-id>
+              <color-hex-triplet>97EC93</color-hex-triplet>
+              <depth type="integer">5</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">569</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">780</id>
+              <name>Posterior amygdalar nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">703</parent-structure-id>
+              <safe-name>Posterior amygdalar nucleus</safe-name>
+              <sphinx-id type="integer">570</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/567/688/703/780/</structure-id-path>
+              <structure-name-facet type="integer">2472141022</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>BLA</acronym>
+              <ar-association-key-name type="NilClass">265656991</ar-association-key-name>
+              <atlas-id type="integer">36</atlas-id>
+              <color-hex-triplet>9DE79C</color-hex-triplet>
+              <depth type="integer">5</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">562</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">295</id>
+              <name>Basolateral amygdalar nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">703</parent-structure-id>
+              <safe-name>Basolateral amygdalar nucleus</safe-name>
+              <sphinx-id type="integer">563</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/567/688/703/295/</structure-id-path>
+              <structure-name-facet type="integer">2535830127</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>COAa</acronym>
+              <ar-association-key-name type="NilClass">265656991</ar-association-key-name>
+              <atlas-id type="integer">79</atlas-id>
+              <color-hex-triplet>61E7B7</color-hex-triplet>
+              <depth type="integer">7</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">427</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">639</id>
+              <name>Cortical amygdalar area, anterior part</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">631</parent-structure-id>
+              <safe-name>Cortical amygdalar area anterior part</safe-name>
+              <sphinx-id type="integer">428</sphinx-id>
+              <st-level type="integer">9</st-level>
+              <structure-id-path>/997/8/567/688/695/698/631/639/</structure-id-path>
+              <structure-name-facet type="integer">3687551647</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+            <structure>
+              <acronym>MEA</acronym>
+              <ar-association-key-name type="NilClass">265656991</ar-association-key-name>
+              <atlas-id type="integer">191</atlas-id>
+              <color-hex-triplet>80C0E2</color-hex-triplet>
+              <depth type="integer">6</depth>
+              <failed type="boolean">false</failed>
+              <failed-facet type="integer">734881840</failed-facet>
+              <graph-id type="integer">1</graph-id>
+              <graph-order type="integer">600</graph-order>
+              <hemisphere-id type="integer">3</hemisphere-id>
+              <id type="integer">403</id>
+              <name>Medial amygdalar nucleus</name>
+              <neuro-name-structure-id type="integer" nil="true"/>
+              <neuro-name-structure-id-path nil="true"/>
+              <ontology-id type="integer">1</ontology-id>
+              <parent-structure-id type="integer">278</parent-structure-id>
+              <safe-name>Medial amygdalar nucleus</safe-name>
+              <sphinx-id type="integer">601</sphinx-id>
+              <st-level type="integer">8</st-level>
+              <structure-id-path>/997/8/567/623/477/278/403/</structure-id-path>
+              <structure-name-facet type="integer">3783070713</structure-name-facet>
+              <weight type="integer">8690</weight>
+            </structure>
+          </structures>
+        </stereotaxic-injection>
+      </stereotaxic-injections>
+    </specimen>
+  </section-data-set>
+</section-data-sets>
+</Response>
